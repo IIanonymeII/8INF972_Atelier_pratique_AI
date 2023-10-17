@@ -1,0 +1,206 @@
+.tarif_section{
+    width: 100%;
+    background: #F193B2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 1px black solid;
+    
+    line-height: 31.40px;
+    word-wrap: break-word ;
+    padding:1%;
+}
+.titre_tarif{
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    font-family: Lato;
+    font-weight: 400;
+}
+
+.content_tarif{
+    font-size: 30px;
+    font-family: Lato;
+    font-weight: 400;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+
+body{
+    margin:0;
+    width: 100%;
+    background: #1C5588;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 1px black solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.menuBar{
+    width: 98%;
+    height: 75px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FBCE9E;
+    flex-direction: row-reverse;
+    justify-content:flex-start;
+    padding-inline-end: 2%;
+}
+
+.menuLogo{
+    width: 73px;
+    height: 65px;
+    display:flex;
+}
+
+.menuLogin{
+    text-align: right;
+    color: #1C5588;
+    font-size: 50px;
+    font-family: Lato; 
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.presentationDiv{
+    /*width:100%;*/
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.baniereTitre{
+    width:100%;
+    background: #00BDC8;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-size: 50px;
+    font-family: Lato;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.tarifPanel{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.copyright_ext{
+    width: 100%;
+    background: #FBCE9E;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1%;
+}
+
+.copyright_int{
+    color: #1C5588;
+    font-size: 12px;
+    font-family: Lato;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.titreFiltreSearch{
+    width: 50%;
+    height: 131px;
+    color: white;
+    font-size: 80px;
+    font-family: Lato;
+    font-weight: 400;
+    line-height: 60.80px;
+    word-wrap: normal;
+}
+
+#slider {
+    height: 10px;
+    margin-top: 20px;
+    width:100%;
+}
+
+#slider-values {
+    margin-top: 10px;
+}
+
+.sliderContainer{
+    width: 90%;
+}
+
+.labelOption{
+    color: white;
+    font-size: 35px;
+    font-family: Lato;
+    font-weight: 400;
+    line-height: 54.95px;
+    word-wrap: break-word;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+.option {
+    display: flex;
+    align-items: center;
+}
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+#simulationResult{
+    display : none;
+    width: 80%;
+    background: #00BDC8;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding:5%;
+}
+
+.titreSectionSimulation{
+    color: white;
+    font-size: 80px;
+    font-family: Lato;
+    font-weight: 400;
+    line-height: 60.80px;
+    width: 70%;
+}
+
+#textSynopsis{
+    color: white;
+    font-size: 20px;
+    font-family: Lato;
+    font-weight: 400; 
+    line-height: 31.60px;
+}
+
+.actorName{
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-family: Lato;
+    font-weight: 400;
+    line-height: 22.80px;
+}
+
+#listeDistribution {
+    list-style: none; /* Remove default list-style */
+    padding: 0; 
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to the next line */
+    justify-content: space-around;
+}
+
+.sectionSimulation{
+    align-self: flex-start;
+    width:100%;
+    padding:2%;
+}
