@@ -117,6 +117,7 @@ X = X.dropna()
 target = 'revenue'
 y = X[target]
 X.drop('revenue', axis = 1, inplace=True)
+X.columns = X.columns.astype(str)
 
 print(X.head(5))
 print("X shape " + str(X.shape))
