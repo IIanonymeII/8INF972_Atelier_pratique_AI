@@ -229,13 +229,13 @@ def scrapWikipedia(title, year, data, driver):
             elif content == "Budget":
                 contentTD = waitForOneElement(row, By.TAG_NAME, "td").text
                 pattern = r'\[.*?\]'
-                contentTD = re.sub(pattern, '', contentTD)
+                contentTD = re.sub(pattern, '', contentTD).replace("$", "")
                 if (contentTD.find("million") != -1):
-                    pattern = r'\$\d+(?:[,.]\d{0,4})? million'
+                    pattern = r'\d+(?:[,.]\d{0,4})? million'
                     matches = re.search(pattern, contentTD)
                     if matches:
                         matched_text = matches.group()
-                        cleaned_text = matched_text.replace("$", "").replace(" million", "")
+                        cleaned_text = matched_text.replace(" million", "")
                         array = cleaned_text.split()
                         if len(array) > 1:
                             cleaned_text = array[-1]
@@ -244,7 +244,12 @@ def scrapWikipedia(title, year, data, driver):
                         # Convert the cleaned text to a float and multiply it by 1,000,000
                         budget = round(float(cleaned_text) * 1000000)
                     else:
-                        if(contentTD.find("-")):
+                        if(contentTD.find("–")):
+                            budget = contentTD.split("–")[-1].split()[0]
+                            budget = round(float(budget) * 1000000)
+                            print("title: ", title, "\tbudget had: ", contentTD,
+                                  "\tbudget got: ", budget)
+                        elif(contentTD.find("-")):
                             budget = contentTD.split("-")[-1].split()[0]
                             budget = round(float(budget) * 1000000)
                             print("title: ", title, "\tbudget had: ", contentTD,
