@@ -197,14 +197,13 @@ def scrapWikipedia(title, year, data, driver):
         driver.close()
         driver.switch_to.window(driver.window_handles[-1])
         return data
-
-    wait = WebDriverWait(driver, 10)  # Set a maximum wait time (e.g., 10 seconds)
-    wait.until(EC.presence_of_element_located((By.CLASS_NAME, "mw-search-result-heading")))
     
     # Get movie page
-    results = waitForMultipleElements(driver, By.CLASS_NAME, "mw-search-result-heading")
-    link = waitForMultipleElements(results[0], By.CSS_SELECTOR, "a[href]")[0]
-    driver.get(link.get_attribute("href"))
+    pageTitle = waitForOneElement(driver, By.ID, "firstHeading").text
+    if pageTitle == "Search results":
+        results = waitForMultipleElements(driver, By.CLASS_NAME, "mw-search-result-heading")
+        link = waitForMultipleElements(results[0], By.CSS_SELECTOR, "a[href]")[0]
+        driver.get(link.get_attribute("href"))
     table = waitForMultipleElements(driver, By.CLASS_NAME, "infobox")
     if len(table) == 0:
         driver.close()
@@ -337,6 +336,6 @@ pos_mapping_2 = {
 current_year = 2022
 cpi_current = cpi.get(current_year)
 driver = create_driver()
-for year in range(1978, 2023, 1):
+for year in range(1988, 2023, 1):
     scrape_year(driver, year, 200)
 driver.quit()
