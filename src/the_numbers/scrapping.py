@@ -9,6 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.keys import Keys
 import cpi
 
@@ -18,7 +20,7 @@ def extractNumberFromDollar(priceStr):
 
 def create_driver():
     firefox_options = webdriver.FirefoxOptions()
-    driver = webdriver.Firefox(executable_path='geckodriver.exe', options=firefox_options)
+    driver = webdriver.Firefox(service=FirefoxService(executable_path=GeckoDriverManager().install()), options=firefox_options)
     return driver
 
 def waitForOneElement(driver, by, name):
@@ -204,6 +206,10 @@ def scrapWikipedia(title, year, data, driver):
     link = waitForMultipleElements(results[0], By.CSS_SELECTOR, "a[href]")[0]
     driver.get(link.get_attribute("href"))
     table = waitForMultipleElements(driver, By.CLASS_NAME, "infobox")
+    if len(table) == 0:
+        driver.close()
+        driver.switch_to.window(driver.window_handles[-1])
+        return data
     rows = waitForMultipleElements(table[0], By.TAG_NAME, "tr")
     budget = None
     year_OK = False
@@ -247,8 +253,8 @@ def scrapWikipedia(title, year, data, driver):
                             print("title: ", title, "\tbudget: ", contentTD)
                         
                 else:
-                    cleaned_text = contentTD.replace("$", "").replace(",", "")
-                    array = cleaned_text.split()
+                    filtered_text = ''.join(re.findall(r'[\d\s]+', contentTD))
+                    array = filtered_text.split()
                     if len(array) > 1:
                         cleaned_text = array[-1]
                     else:
@@ -326,6 +332,6 @@ pos_mapping_2 = {
 current_year = 2022
 cpi_current = cpi.get(current_year)
 driver = create_driver()
-for year in range(1974, 2023, 1):
+for year in range(1978, 2023, 1):
     scrape_year(driver, year, 200)
 driver.quit()
