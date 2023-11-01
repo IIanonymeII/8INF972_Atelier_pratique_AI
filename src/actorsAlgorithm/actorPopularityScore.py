@@ -12,8 +12,9 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.keys import Keys
+import shutil
+import webbrowser
 
-current_directory = os.getcwd()
 
 ### SCRAPPING UTILS ###
 ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
@@ -29,6 +30,18 @@ def waitForOneElement(driver, by, name):
     except TimeoutException:
         return None
 
+def get_download_folder():
+    # Get the user's home directory
+    home_directory = os.path.expanduser("~")
+
+    # Combine the home directory with the default Downloads folder name
+    download_folder = os.path.join(home_directory, "Downloads")
+
+    return download_folder
+
+###SETS CONSTANTS ###
+current_directory = os.getcwd()
+default_download = get_download_folder()
 
 ### DATASETS ###
 # movie dataset
@@ -59,16 +72,21 @@ def get_actors_genre(movie_list):
     actors_list = []
     for i in range(0, credits_data.shape[0]) :
         movie = credits_data.loc[i, 'title']
+        i = 0
         if movie in movie_list :
             cast = json.loads(credits_data.loc[i, 'cast'])
+            j = 0
             for cast_member in cast:
-                print("new guy")
+                print("film : ", i, "/", credits_data.shape[0], ", actor : ", j, "/", len(cast))
                 pop = 0
                 ## si le nom est dans actor.csv il est populaire d apres imdb
                 if cast_member['name'] in imdb_popularity_data['Actor']:
                     pop = 1
+                
+                scrapActorGoogleTrends(cast_member['name'])
                 nb_follow = scrapActorFollowers(cast_member['name'])
-                time.sleep(15)
+                
+                #time.sleep(15)
                 actor_info = {
                     'name': cast_member['name'],
                     'order': cast_member['order'],
@@ -76,6 +94,8 @@ def get_actors_genre(movie_list):
                     'nb_followers': nb_follow,
                     }
                 actors_list.append(actor_info)
+                j+=1
+            i+=1
     print(actors_list)
     return(actors_list)            
 
@@ -94,7 +114,6 @@ def scrapActorFollowers(username):
             try:
                 search_box = waitForOneElement(driver, By.NAME, 'q')
                 if search_box:
-                    print("search box found")
                     search_box.send_keys(f'{username} on Instagram')
                     time.sleep(2)  # Wait for search results to load
                     search_box.submit()
@@ -109,12 +128,67 @@ def scrapActorFollowers(username):
                             followers_count = followers_element.get_attribute('title')
                             print("nb followers : ", followers_count)
                             success = True
-                            break
+                break
             except StaleElementReferenceException:
                 print("StaleElementReferenceException, ", username)
                 time.sleep(2)
                 attempts += 1
-        return(followers_count)    
+        return(followers_count)
+
+def scrapActorGoogleTrends(username):
+        
+        success = False
+        attempts = 0
+        while((attempts < 4) and (success == False) ):
+            driver.execute_script("window.open('');")
+            driver.switch_to.window(driver.window_handles[-1]) 
+            driver.get('https://trends.google.fr/trends?geo=US&hl=fr')
+            try:
+                search_box = waitForOneElement(driver, By.ID, 'i7') #access the google trends search box
+                if search_box:
+                    search_box.clear()
+                    search_box.send_keys(f'{username}')
+                    search_box.send_keys(Keys.RETURN)
+                    time.sleep(2)  # Wait for search results to load
+                    
+                    #selects "12 derniers mois" in Time period picker
+                    time_period_picker = waitForOneElement(driver, By.ID, 'select_10')
+                    if time_period_picker and time_period_picker.is_enabled():
+                        time_period_picker.click()  # Click to open the dropdown
+                        # Wait for the dropdown menu to be present
+                        dropdown_menu = WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.ID, 'select_container_11'))
+                        )
+
+                        options = dropdown_menu.find_elements(By.CLASS_NAME, 'custom-date-picker-select-option')
+                        for option in options:
+                            if option.text == '12 derniers mois':
+                                option.click()
+                                break
+
+                    #downloads the corresponding .csv file as : {username}_trend.csv
+                    time.sleep(2)
+                    download_button = waitForOneElement(driver, By.CSS_SELECTOR, 'button.export')
+                    if download_button and download_button.is_enabled():
+                        driver.execute_script("arguments[0].click();", download_button)
+                        print("downloading")
+                        time.sleep(2)  # Wait for the file to download
+                        src_path = os.path.join(default_download,'multiTimeline.csv')
+                        dest_path = os.path.join("src","actor_trends_scrap", f"{username}_trend.csv")
+                        if os.path.exists(src_path):
+                            if os.path.exists(dest_path):
+                                os.replace(src_path, dest_path)
+                            else:
+                                shutil.move(src_path, dest_path)
+
+                            # Set success to True since the operation completed
+                            success = True
+                    attempts +=1
+
+            except StaleElementReferenceException:
+                print("StaleElementReferenceException, ", username)
+                time.sleep(2)
+                attempts += 1  
 
 #Tests : 
 action_movies = get_movies_by_genre('Action')
