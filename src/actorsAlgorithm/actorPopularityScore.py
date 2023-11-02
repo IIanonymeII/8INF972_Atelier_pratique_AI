@@ -108,6 +108,7 @@ def fillPopularityDataSet(my_movie):
         
 
         if not is_actor_registered('src/actorsAlgorithm/popularity_data.csv', cast_member):
+            print(cast_member)
             scrapActorGoogleTrends(cast_member)
             nb_follow = scrapActorFollowers(cast_member)
             add_data(cast_member, nb_follow, pop)
@@ -200,6 +201,10 @@ def scrapActorFollowers(username):
                 break                    
             except StaleElementReferenceException:
                 print("StaleElementReferenceException, ", username)
+                time.sleep(2)
+                attempts += 1
+            except TimeoutException:
+                print(f"TimeoutException while scraping followers for {username}")
                 time.sleep(2)
                 attempts += 1
         return(followers_count)
