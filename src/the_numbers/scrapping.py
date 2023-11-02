@@ -25,7 +25,7 @@ def create_driver():
 
 def waitForOneElement(driver, by, name):
     try:
-        return WebDriverWait(driver, 10, ignored_exceptions=ignored_exceptions)\
+        return WebDriverWait(driver, 5, ignored_exceptions=ignored_exceptions)\
                             .until(EC.presence_of_element_located((by, name)))
     except TimeoutException:
         return None
@@ -33,7 +33,7 @@ def waitForOneElement(driver, by, name):
 
 def waitForMultipleElements(driver, by, name):
     try:
-        return WebDriverWait(driver, 1, ignored_exceptions=ignored_exceptions)\
+        return WebDriverWait(driver, 3, ignored_exceptions=ignored_exceptions)\
             .until(EC.presence_of_all_elements_located((by, name)))
     except TimeoutException:
         return []
@@ -86,6 +86,8 @@ def getMovieInfo(driver, url, year, data):
     driver.switch_to.window(driver.window_handles[-1]) 
     driver.get(url)
     data[TITLE_POS] = getTitle(driver)
+    if data[TITLE_POS] == None:
+        return None
     data = getPerformance(driver, data, year)
     list_h2 = waitForMultipleElements(driver, By.TAG_NAME, "h2")
     for h2 in list_h2:
@@ -139,6 +141,8 @@ def getMovieInfo(driver, url, year, data):
 
 def getTitle(driver):
     main = waitForOneElement(driver, By.ID, "main")
+    if main == None:
+        return None
     list_h1 = waitForMultipleElements(main, By.TAG_NAME, "h1")
     h1 = list_h1[0]
     return h1.text.rsplit(' ', 1)[0]
@@ -153,15 +157,23 @@ def getPerformance(driver, data, year):
             col2 = cols[1].text
             match col1:
                 case "Domestic Box Office":
-                    box_office = int(extractNumberFromDollar(col2))
-                    adjusted_box_office = adjustToInflation(box_office, year)
-                    data[BOXOFFICE_DOMESTIC_ORIGINAL_POS] = box_office
-                    data[BOXOFFICE_DOMESTIC_ADJUSTED_POS] = adjusted_box_office
+                    if (col2 == "n/a"):
+                        data[BOXOFFICE_DOMESTIC_ORIGINAL_POS] = 0
+                        data[BOXOFFICE_DOMESTIC_ADJUSTED_POS] = 0
+                    else:
+                        box_office = int(extractNumberFromDollar(col2))
+                        adjusted_box_office = adjustToInflation(box_office, year)
+                        data[BOXOFFICE_DOMESTIC_ORIGINAL_POS] = box_office
+                        data[BOXOFFICE_DOMESTIC_ADJUSTED_POS] = adjusted_box_office
                 case "International Box Office":
-                    box_office = int(extractNumberFromDollar(col2))
-                    adjusted_box_office = adjustToInflation(box_office, year)
-                    data[BOXOFFICE_INTERNATIONAL_ORIGINAL_POS] = box_office
-                    data[BOXOFFICE_INTERNATIONAL_ADJUSTED_POS] = adjusted_box_office
+                    if (col2 == "n/a"):
+                        data[BOXOFFICE_INTERNATIONAL_ORIGINAL_POS] = 0
+                        data[BOXOFFICE_INTERNATIONAL_ADJUSTED_POS] = 0
+                    else:
+                        box_office = int(extractNumberFromDollar(col2))
+                        adjusted_box_office = adjustToInflation(box_office, year)
+                        data[BOXOFFICE_INTERNATIONAL_ORIGINAL_POS] = box_office
+                        data[BOXOFFICE_INTERNATIONAL_ADJUSTED_POS] = adjusted_box_office
     return data
 
 def findMovie(driver, year, title):
@@ -182,10 +194,10 @@ def findMovie(driver, year, title):
                 time.sleep(1)
             searchInput.send_keys(title + " " + str(year) +" film ")
             searchInput.submit()
+            
             success = True;
             break;
         except StaleElementReferenceException:
-            print("StaleElementReferenceException, ", title)
             time.sleep(2)
             attempts += 1
         
@@ -194,41 +206,41 @@ def findMovie(driver, year, title):
 def scrapWikipedia(title, year, data, driver):
     success = findMovie(driver, year, title)
     if not success:
+        print(f"wikipedia: {title} not found")
         driver.close()
         driver.switch_to.window(driver.window_handles[-1])
         return data
     
     # Get movie page
+    waitForMultipleElements(driver, By.CLASS_NAME, "searchresults")
     pageTitle = waitForOneElement(driver, By.ID, "firstHeading").text
-    if pageTitle == "Search results":
+    if pageTitle.strip() == "Search results":
         results = waitForMultipleElements(driver, By.CLASS_NAME, "mw-search-result-heading")
+        if len(results) == 0:
+            print(f"wikipedia: {title}: No results for search")
+            driver.close()
+            driver.switch_to.window(driver.window_handles[-1])
+            return data
         link = waitForMultipleElements(results[0], By.CSS_SELECTOR, "a[href]")[0]
         driver.get(link.get_attribute("href"))
     table = waitForMultipleElements(driver, By.CLASS_NAME, "infobox")
     if len(table) == 0:
+        print(f"wikipedia: {title} not found (no table on right)")
         driver.close()
         driver.switch_to.window(driver.window_handles[-1])
         return data
     rows = waitForMultipleElements(table[0], By.TAG_NAME, "tr")
     budget = None
-    year_OK = False
     for row in rows:
         col = waitForMultipleElements(row, By.TAG_NAME, "th")
         if len(col) > 0:
             col = col[0]
             content = col.text
-            matches = re.search(r'release dates?', content, re.IGNORECASE)
-            if matches:
-                contentTD = waitForOneElement(row, By.TAG_NAME, "td").text
-                if contentTD.find(str(year)) != -1:
-                    year_OK = True
-                else:
-                    print("title: ", title, "\tyear: ", content)
-                    year_OK = False
-            elif content == "Budget":
-                contentTD = waitForOneElement(row, By.TAG_NAME, "td").text
+            if content == "Budget":
+                contentTDOriginal = waitForOneElement(row, By.TAG_NAME, "td").text
                 pattern = r'\[.*?\]'
-                contentTD = re.sub(pattern, '', contentTD).replace("$", "")
+                contentTD = re.sub(pattern, '', contentTDOriginal).replace("$", "")
+                budget = None
                 if (contentTD.find("million") != -1):
                     pattern = r'\d+(?:[,.]\d{0,4})? million'
                     matches = re.search(pattern, contentTD)
@@ -241,36 +253,44 @@ def scrapWikipedia(title, year, data, driver):
                         else:
                             cleaned_text = array[0]
                         # Convert the cleaned text to a float and multiply it by 1,000,000
-                        budget = round(float(cleaned_text) * 1000000)
+                        try:
+                            budget = round(float(cleaned_text) * 1000000)
+                        except ValueError:
+                            print(f"Error for conversion of price ({cleaned_text}) for {title} ({year})")
+                            budget = None
+                        
                     else:
                         if(contentTD.find("–")):
                             budget = contentTD.split("–")[-1].split()[0]
-                            budget = round(float(budget) * 1000000)
-                            print("title: ", title, "\tbudget had: ", contentTD,
-                                  "\tbudget got: ", budget)
+                            try:
+                                budget = round(float(budget) * 1000000)
+                            except ValueError:
+                                print(f"Error for conversion of price ({budget}) for {title} ({year})")
+                                budget = None
                         elif(contentTD.find("-")):
                             budget = contentTD.split("-")[-1].split()[0]
-                            budget = round(float(budget) * 1000000)
-                            print("title: ", title, "\tbudget had: ", contentTD,
-                                  "\tbudget got: ", budget)
-                        else:
-                            print("title: ", title, "\tbudget: ", contentTD)
-                        
+                            try:
+                                budget = round(float(budget) * 1000000)
+                            except ValueError:
+                                print(f"Error for conversion of price ({budget}) for {title} ({year})")
+                                budget = None
+                            
                 else:
                     filtered_text = ''.join(re.findall(r'[\d\s]+', contentTD))
                     array = filtered_text.split()
-                    if len(array) > 1:
-                        cleaned_text = array[-1]
-                    else:
-                        cleaned_text = array[0]
-                    budget = int(cleaned_text)
-    if year_OK:
-        data[BUDGET_ORIGINAL_POS] = budget
-        if budget == None:
-            adjusted_budget = None
-        else:
-            adjusted_budget = adjustToInflation(budget, year)
-        data[BUDGET_AJUSTED_POS] = adjusted_budget
+                    if len(array) != 0:
+                        if len(array) > 1:
+                            cleaned_text = array[-1]
+                        else:
+                            cleaned_text = array[0]
+                        budget = int(cleaned_text)
+                # print(f"wikipedia: {title} (({year})) Budget in div: {contentTDOriginal}; Extracted: {budget}")
+    data[BUDGET_ORIGINAL_POS] = budget
+    if budget == None:
+        adjusted_budget = None
+    else:
+        adjusted_budget = adjustToInflation(budget, year)
+    data[BUDGET_AJUSTED_POS] = adjusted_budget
     driver.close()
     driver.switch_to.window(driver.window_handles[-1])
     return data
@@ -336,6 +356,7 @@ pos_mapping_2 = {
 current_year = 2022
 cpi_current = cpi.get(current_year)
 driver = create_driver()
-for year in range(1988, 2023, 1):
-    scrape_year(driver, year, 200)
+#cpi.update()
+for year in range(2015, 2023, 1):
+    scrape_year(driver, year, 400)
 driver.quit()
