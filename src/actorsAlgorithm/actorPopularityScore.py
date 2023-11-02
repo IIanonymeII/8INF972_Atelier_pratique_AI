@@ -135,6 +135,7 @@ def is_actor_registered(file_path, actor_name):
         with open(file_path, 'r') as csvfile:
             reader = csv.DictReader(csvfile)
             if 'Actor' not in reader.fieldnames:
+                print('colonne mal implementée')
                 return False
 
             for row in reader:
@@ -167,32 +168,31 @@ def scrapActorFollowers(username):
                 if search_box:
                     search_box.send_keys(f'{username} on Instagram')
                     search_box.submit()
-                    time.sleep(2)  # Wait for search results to load
+                    #WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[jsname="UWckNb"][href*="instagram.com"]'))).click()
+                    time.sleep(2)
                     first_result = waitForOneElement(driver, By.CSS_SELECTOR, 'a[jsname="UWckNb"][href*="instagram.com"]')
                     if first_result:
                         first_result.click()
                         time.sleep(2)  # Wait for the profile to load
 
-                        button = waitForOneElement(driver, By.CLASS_NAME, '_a9--')
-                        if button is not None and button.is_displayed():
-                            button.click() 
+                        # # refus des cookies
+                        # button = waitForOneElement(driver, By.CLASS_NAME, '_a9--')
+                        # if button is not None and button.is_displayed():
+                        #     button.click() 
                         
-                        #connection to instagram
-                        account = waitForOneElement(driver, By.NAME, 'username')
-                        if account is not None and account.is_displayed() :
-                            account.clear()
-                            account.send_keys(insta_account)
-                        mdp_area = waitForOneElement(driver, By.NAME, 'password')
-                        if mdp_area is not None and mdp_area.is_displayed() : 
-                            mdp_area.clear()
-                            mdp_area.send_keys(mdp)
-                            mdp_area.send_keys(Keys.RETURN)
-                        close = waitForOneElement(driver, By.CLASS_NAME, '_abn5 _abn6 _aa5h')
-                        if close is not None and button.is_displayed():
-                            close.click() 
+                        # #connection to instagram
+                        # account = waitForOneElement(driver, By.NAME, 'username')
+                        # if account is not None and account.is_displayed() :
+                        #     account.clear()
+                        #     account.send_keys(insta_account)
+                        # mdp_area = waitForOneElement(driver, By.NAME, 'password')
+                        # if mdp_area is not None and mdp_area.is_displayed() : 
+                        #     mdp_area.clear()
+                        #     mdp_area.send_keys(mdp)
+                        #     mdp_area.send_keys(Keys.RETURN)
                         
                         #get the number of followers of the actor
-                        followers_element = waitForOneElement(driver,By.XPATH,'//span[@class="_ac2a" and @title][1]')
+                        followers_element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="_ac2a" and @title][1]')))
                         if followers_element:
                             followers_count = followers_element.get_attribute('title')
                             print("nb followers : ", followers_count)
