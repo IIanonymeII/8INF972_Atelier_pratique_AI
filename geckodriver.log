@@ -1,0 +1,371 @@
+1698730426861	geckodriver	INFO	Listening on 127.0.0.1:65121
+1698730685201	geckodriver	INFO	Listening on 127.0.0.1:50320
+1698731246747	geckodriver	INFO	Listening on 127.0.0.1:53459
+1698731469195	geckodriver	INFO	Listening on 127.0.0.1:54718
+1698731472258	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "54719" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\diane\\AppData\\Local\\Temp\\rust_mozprofileqSZAh3"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1698731472511	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+1698731472829	Marionette	INFO	Listening on port 54744
+WebDriver BiDi listening on ws://127.0.0.1:54719
+Read port: 54744
+1698731473005	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+DevTools listening on ws://127.0.0.1:54719/devtools/browser/09d3442a-1c02-4e22-af0c-ecd996ddc271
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+1698731494698	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+1698731500380	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+1698731502608	addons.xpi	ERROR	System addon update list error SyntaxError: XMLHttpRequest.open: 'http://%(server)s/dummy-system-addons.xml' is not a valid URL.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+JavaScript warning: https://en.wikipedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector-2022 line 10 > eval, line 8: Script terminated by timeout at:
+BackgroundQueue/queue.flush@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:511
+BackgroundQueue/<@https://en.wikipedia.org/w/load.php?lang=en&modules=ext.eventLogging&skin=vector-2022&version=1v48a:8:585
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://en.wikipedia.org."
+JavaScript error: resource://gre/actors/PictureInPictureChild.sys.mjs, line 348: TypeError: can't access dead object
+1698732262177	geckodriver	INFO	Listening on 127.0.0.1:58928
+1698732265204	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "58929" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\diane\\AppData\\Local\\Temp\\rust_mozprofileix24FO"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1698732265453	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+1698732265797	Marionette	INFO	Listening on port 58952
+WebDriver BiDi listening on ws://127.0.0.1:58929
+Read port: 58952
+1698732265969	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1698732304090	geckodriver	INFO	Listening on 127.0.0.1:59172
+1698732307139	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "59173" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\diane\\AppData\\Local\\Temp\\rust_mozprofilekz6CSq"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1698732307381	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+1698732307710	Marionette	INFO	Listening on port 59196
+WebDriver BiDi listening on ws://127.0.0.1:59173
+Read port: 59196
+1698732307876	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+DevTools listening on ws://127.0.0.1:59173/devtools/browser/d1bbd5e3-f6ea-44d4-a514-1c0ebe8bfc4a
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ipW_4/y4/l/fr_FR/cp4TD9CO8bO.js?_nc_x=Ij3Wp8lg5Kz, line 71: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1698732337423	addons.xpi	ERROR	System addon update list error SyntaxError: XMLHttpRequest.open: 'http://%(server)s/dummy-system-addons.xml' is not a valid URL.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.instagram.com."
+console.error: "Unable to find target with innerWindowId:6442450945"
+console.error: "Unable to find target with innerWindowId:6442450945"
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ipW_4/y4/l/fr_FR/cp4TD9CO8bO.js?_nc_x=Ij3Wp8lg5Kz, line 71: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.error: "Unable to find target with innerWindowId:6442450946"
+Handler function threw an exception: TypeError: browsingContext.currentWindowGlobal is null
+Stack: isChannelFromSystemPrincipal@resource://devtools/shared/network-observer/NetworkUtils.sys.mjs:89:1
+_createResource@resource://devtools/server/actors/network-monitor/network-event-actor.js:186:40
+NetworkEventActor@resource://devtools/server/actors/network-monitor/network-event-actor.js:104:27
+onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:284:19
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:684:46
+#onRequestHeader@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:728:29
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:604:28
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 89, column: 1
+console.error: (new TypeError("browsingContext.currentWindowGlobal is null", "resource://devtools/shared/network-observer/NetworkUtils.sys.mjs", 89))
+Handler function threw an exception: TypeError: httpActivity.owner is null
+Stack: #sendRequestBody@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:1358:7
+#dispatchActivity@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:518:30
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:634:29
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 1358, column: 7
+console.error: (new TypeError("httpActivity.owner is null", "resource://devtools/shared/network-observer/NetworkObserver.sys.mjs", 1358))
+Handler function threw an exception: TypeError: browsingContext.currentWindowGlobal is null
+Stack: isChannelFromSystemPrincipal@resource://devtools/shared/network-observer/NetworkUtils.sys.mjs:89:1
+_createResource@resource://devtools/server/actors/network-monitor/network-event-actor.js:186:40
+NetworkEventActor@resource://devtools/server/actors/network-monitor/network-event-actor.js:104:27
+onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:284:19
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:684:46
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:342:33
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 89, column: 1
+console.error: (new TypeError("browsingContext.currentWindowGlobal is null", "resource://devtools/shared/network-observer/NetworkUtils.sys.mjs", 89))
+1698732395835	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.warn: "Listener for event 'frame' did not return a promise."
+console.error: "Unable to find target with innerWindowId:8589934596"
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ipW_4/y4/l/fr_FR/cp4TD9CO8bO.js?_nc_x=Ij3Wp8lg5Kz, line 71: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1698732418669	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.warn: "Listener for event 'frame' did not return a promise."
+console.error: "Unable to find target with innerWindowId:12884901892"
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ipW_4/y4/l/fr_FR/cp4TD9CO8bO.js?_nc_x=Ij3Wp8lg5Kz, line 71: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1698732669804	geckodriver	INFO	Listening on 127.0.0.1:61106
+1698732672862	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "61107" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\diane\\AppData\\Local\\Temp\\rust_mozprofileDKkO3o"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1698732673114	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+1698732673443	Marionette	INFO	Listening on port 61130
+WebDriver BiDi listening on ws://127.0.0.1:61107
+Read port: 61130
+1698732673612	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+DevTools listening on ws://127.0.0.1:61107/devtools/browser/fed40bfe-b183-49fd-8ace-5656eeb7530b
+1698732676828	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732678461	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732678628	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732678791	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732678967	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732679130	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732679287	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732679441	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732679592	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732679741	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732679899	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732680053	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732680215	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732680361	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732680500	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732680651	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732680791	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732680941	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732681091	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732681234	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732681383	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732681542	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732681718	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732681875	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732682041	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732682244	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732682409	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732682570	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732682735	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732682890	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732683059	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732683219	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732683733	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732683962	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732684156	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732684339	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732684536	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732684694	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732685124	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732685278	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732685432	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732685587	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732685744	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732685900	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732686052	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732686204	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732686366	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732686520	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732686669	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732686821	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732686973	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732687120	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732687271	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732687436	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732687594	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732687764	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732687916	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732688071	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732688274	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732688446	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732688606	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732688770	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732688961	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732689158	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732689334	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732689545	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732690063	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732690215	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732690366	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732690520	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732690674	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732690833	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732690990	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732691140	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732691293	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732691453	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732691606	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732691769	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732691963	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732692135	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732692317	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732692502	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732692697	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732692890	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732693091	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732693270	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732693496	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732693692	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732693892	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732694111	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732694338	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732694756	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732694956	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732695129	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732695314	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732695488	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732695652	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732695835	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732696013	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732696164	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732696322	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732696478	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732696641	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732696794	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732696940	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732697105	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732697255	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732697415	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732697569	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732697737	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732697942	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732698152	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732698378	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732698625	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732698906	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732699566	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732699912	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732700224	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732700548	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732700868	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732701206	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732701582	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732701927	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732702254	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732702664	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732703003	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732703301	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732703646	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732704010	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732704319	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732704633	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732704965	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732705326	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732705713	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732706023	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732706359	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732706757	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732739851	geckodriver	INFO	Listening on 127.0.0.1:61512
+1698732742908	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "61513" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\diane\\AppData\\Local\\Temp\\rust_mozprofileWGw1W3"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1698732743174	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+1698732743583	Marionette	INFO	Listening on port 61534
+WebDriver BiDi listening on ws://127.0.0.1:61513
+Read port: 61534
+1698732743761	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+DevTools listening on ws://127.0.0.1:61513/devtools/browser/6b165c61-aca6-4be2-b93c-ee0876dcd549
+1698732746781	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732750135	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732750305	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732750519	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732750773	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732751015	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732751230	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732751515	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732751735	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732751983	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732752333	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732752905	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732753215	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732753482	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732753770	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1698732754075	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
