@@ -1,14 +1,13 @@
 import pandas as pd
-from sklearn.impute import KNNImputer
+from sklearn.impute import KNNImputer, SimpleImputer
 
 # Step 1: Concatenate all CSV files into one DataFrame
-dfs = [pd.read_csv("src/the_numbers/movies" + str(year) + ".csv") for year in range(1930, 2016)]
+dfs = [pd.read_csv("movies" + str(year) + ".csv") for year in range(1930, 2022)]
 df = pd.concat(dfs, ignore_index=True)
 
 # Step 2: Handle missing values
 # For 'MPAA Rating', replace missing values with the most common one amongst the 1 nearest neighbors
-# knn_imputer = KNNImputer(n_neighbors=1)
-# df['MPAA Rating'] = knn_imputer.fit_transform(df[['MPAA Rating']])
+df['MPAA Rating'] = df["MPAA Rating"].fillna("Not Rated")
 
 # For the following columns, set missing values to 0
 columns_to_fill_with_zero = ['Original domestic B.O', 'Original international B.O',
@@ -19,9 +18,18 @@ df[columns_to_fill_with_zero] = df[columns_to_fill_with_zero].fillna(0)
 df['Total original B.O'] = df['Original domestic B.O'] + df['Original international B.O']
 df['Total adjusted B.O'] = df['Adjusted domestic B.O'] + df['Adjusted international B.O']
 
+columns_to_impute = ["Year", "Month"]
+knn_imputer = KNNImputer(n_neighbors=5, weights='distance')
+df[columns_to_impute] = knn_imputer.fit_transform(df[columns_to_impute])
+
+columns_to_impute = ["Original budget", "Adjusted budget"]
+median_imputer = SimpleImputer(strategy='median')
+df[columns_to_impute] = median_imputer.fit_transform(df[columns_to_impute])
+
 # Step 4: Handle missing values for 'Original budget' and 'Duration'
-columns_to_impute = ['Original budget', 'Duration']
+columns_to_impute = ['Duration']
 knn_imputer = KNNImputer(n_neighbors=15)
 df[columns_to_impute] = knn_imputer.fit_transform(df[columns_to_impute])
-df.to_csv('src/the_numbers/movies1930_2014.csv', index=False)
-# Now, you have a preprocessed DataFrame with all the required transformations.
+df = df.drop_duplicates(subset=['Title', 'Year'])
+
+df.to_csv('movies1930_2022.csv', index=False)

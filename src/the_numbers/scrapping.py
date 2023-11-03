@@ -357,6 +357,6 @@ current_year = 2022
 cpi_current = cpi.get(current_year)
 driver = create_driver()
 #cpi.update()
-for year in range(2015, 2023, 1):
+for year in range(2019, 2023, 1):
     scrape_year(driver, year, 400)
 driver.quit()
