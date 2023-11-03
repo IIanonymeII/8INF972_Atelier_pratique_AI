@@ -3,13 +3,13 @@ import requests
 import pandas as pd
 import json
 import os
-FIRST_YEAR = 2016
+FIRST_YEAR = 1930
 LAST_YEAR = 2022
 COL_NAMES = ["Title", "Year", "Month", "MPAA Rating", "Original domestic B.O",
              "Original international B.O", "Adjusted domestic B.O",
-             "Adjusted international B.O", "Original budget", "Adjusted budget",
-             "Duration", "Keywords", "Source", "Genre", "Production method",
-             "Creative type", "Companies", "Countries", "Languages"]
+             "Adjusted international B.O","Original budget","Adjusted budget",
+             "Duration", "Keywords", "Source", "Production method", 
+             "Creative type", "Companies", "Countries", "Languages", "Genres"]
 
 headers = {
     "accept": "application/json",
