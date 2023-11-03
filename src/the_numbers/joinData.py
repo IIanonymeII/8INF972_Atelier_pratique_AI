@@ -1,5 +1,13 @@
 import pandas as pd
 from sklearn.impute import KNNImputer, SimpleImputer
+import ast
+
+def parse_list_string(s):
+    try:
+        return ast.literal_eval(s)
+    except (SyntaxError, ValueError):
+        return []
+
 
 # Step 1: Concatenate all CSV files into one DataFrame
 dfs = [pd.read_csv("movies" + str(year) + ".csv") for year in range(1930, 2022)]
@@ -19,10 +27,14 @@ df[columns_to_fill_with_zero] = df[columns_to_fill_with_zero].fillna(0)
 df['Total original B.O'] = df['Original domestic B.O'] + df['Original international B.O']
 df['Total adjusted B.O'] = df['Adjusted domestic B.O'] + df['Adjusted international B.O']
 
-"""
+df['Genres'] = df['Genres'].apply(parse_list_string)
+
+df = df.dropna(subset=['Original budget'])
+
+print("Missing values:")
 missing_values_per_column = df.isna().sum()
 print(missing_values_per_column)
-"""
+
 
 columns_to_impute = ["Year", "Month"]
 knn_imputer = KNNImputer(n_neighbors=5, weights='distance')
