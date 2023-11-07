@@ -13,7 +13,6 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.keys import Keys
-import shutil
 import chardet
 
 #insta_account = 'odysseyscrapping@gmail.com'
@@ -75,9 +74,9 @@ def createPopularityDataSet():
     i = 0
     for movie in movies:
         print("film : ", i, "/", len(movies))
-        i += 1
-        if i>4:
+        if i>10:
             fillPopularityDataSet(movie)
+        i += 1
     
 
 def get_cast(my_movie):
@@ -119,16 +118,12 @@ def add_data(actor_name, nb_followers, is_in_IMDB):
     else:
         nb_followers = None
     with open('src/actorsAlgorithm/popularity_data.csv', 'a', newline='') as csvfile:
-        fieldnames = ['Actor', 'Followers', 'Is_In_IMDB', 'Score']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        print("j'enregistre : ", actor_name, "followers : ", nb_followers)
+
+        writer = csv.writer(csvfile)
 
         # Write the new row
-        writer.writerow({
-            'Actor': actor_name,
-            'Followers': nb_followers, 
-            'Is_In_IMDB': is_in_IMDB,
-            'Score': ''  
-        })
+        writer.writerow([actor_name, nb_followers, is_in_IMDB, ''])
 
 def is_actor_registered(file_path, actor_name):
     try:
