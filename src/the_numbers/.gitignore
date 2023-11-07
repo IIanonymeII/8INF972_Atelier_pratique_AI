@@ -1,0 +1,4 @@
+movies*.csv
+geckodriver.log
+# Except for movies1930_2022.csv
+!movies1930_2022.csv
