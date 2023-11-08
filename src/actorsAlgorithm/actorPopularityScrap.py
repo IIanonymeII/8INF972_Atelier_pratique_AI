@@ -14,6 +14,7 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.keys import Keys
 import chardet
+import shutil
 
 #insta_account = 'odysseyscrapping@gmail.com'
 #mdp : 'scrappingwithodyssey'
@@ -74,7 +75,7 @@ def createPopularityDataSet():
     i = 0
     for movie in movies:
         print("film : ", i, "/", len(movies))
-        if i>10:
+        if i>3:
             fillPopularityDataSet(movie)
         i += 1
     
@@ -164,11 +165,9 @@ def scrapActorFollowers(username):
                     search_box.send_keys(f'{username} on Instagram')
                     search_box.submit()
                     #WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a[jsname="UWckNb"][href*="instagram.com"]'))).click()
-                    time.sleep(2)
                     first_result = waitForOneElement(driver, By.CSS_SELECTOR, 'a[jsname="UWckNb"][href*="instagram.com"]')
                     if first_result:
                         first_result.click()
-                        time.sleep(2)  # Wait for the profile to load
 
                         # refus des cookies
                         button = waitForOneElement(driver, By.CLASS_NAME, '_a9--')
@@ -214,7 +213,6 @@ def scrapActorGoogleTrends(username):
                     search_box.clear()
                     search_box.send_keys(f'{username}')
                     search_box.send_keys(Keys.RETURN)
-                    time.sleep(2)  # Wait for search results to load
                     
                     #selects "12 derniers mois" in Time period picker
                     time_period_picker = waitForOneElement(driver, By.ID, 'select_10')
@@ -232,7 +230,6 @@ def scrapActorGoogleTrends(username):
                                 break
 
                     #downloads the corresponding .csv file as : {username}_trend.csv
-                    time.sleep(2)
                     download_button = waitForOneElement(driver, By.CSS_SELECTOR, 'button.export')
                     if download_button and download_button.is_enabled():
                         driver.execute_script("arguments[0].click();", download_button)
