@@ -3,7 +3,7 @@ from sklearn.preprocessing import StandardScaler
 
 
 #Get dataset
-data =pd.read_csv('movies1930_2022.csv')
+data =pd.read_csv('src/the_numbers/movies1930_2022.csv')
 
 ###################
 # FEATURE SELECTION
