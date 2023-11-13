@@ -37,12 +37,8 @@ def waitForOneElement(driver, by, name):
         return None
 
 def get_download_folder():
-    # Get the user's home directory
     home_directory = os.path.expanduser("~")
-
-    # Combine the home directory with the default Downloads folder name
     download_folder = os.path.join(home_directory, "Downloads")
-
     return download_folder
 
 ### DATASETS ###
@@ -260,5 +256,5 @@ def known_cast_movies():
         known_cast_movies.append(movie_title)
     return known_cast_movies
 
-createPopularityDataSet()
-driver.quit() # Close the browser
+#createPopularityDataSet()
+#driver.quit() # Close the browser
