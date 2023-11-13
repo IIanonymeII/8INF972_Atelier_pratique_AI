@@ -11,7 +11,7 @@ import time
 start_time = time.time()
 
 # Load your dataset (replace 'your_dataset.csv' with your actual file)
-df = pd.read_csv('dataset.csv')
+df = pd.read_csv('src/the_numbers/dataset.csv')
 
 #Looking at shape of dataset
 print("\nShape of dataset " + str(df.shape))
