@@ -18,7 +18,14 @@ from selenium.webdriver.common.keys import Keys
 ################
 ### DATASETS ###
 ################
-current_directory = os.getcwd()
+# current_directory = os.getcwd()  # le probleme c'est que il retourn le repertoire de travail courant, c'est  dire à partir d'ou le fichier principal est lancé, ex: si je le lance a la racine et que j'appel ce fichier il va retourné C: et pas ou le fichier castingAlgorithm.py est
+
+# Obtenez le chemin absolu du fichier
+file_path = os.path.abspath(__file__)
+# Obtenez le répertoire du fichier
+file_directory = os.path.dirname(file_path)
+current_directory = os.path.dirname(os.path.dirname(file_directory))
+
 # movie dataset
 file_path = os.path.join(current_directory, 'src', 'Kaggle_dataset', 'tmdb_5000_movies.csv')
 movie_data = pd.read_csv(file_path)
@@ -58,7 +65,7 @@ def get_download_folder():
 #################
 ### ALGORITHM ###
 #################
-def findActorsBOXOFFICE(castSize, genres, budgetMin, budgetMax):
+def  findActorsBOXOFFICE(castSize, genres, budgetMin, budgetMax):
     # castSize : nombre d'acteurs à retourner
     # genres : liste des genres selectionnés par l'utilisateur
     # budgetMin / budgetMax : selection par le slider
@@ -95,6 +102,13 @@ def get_movies_by_genres(genres, threshold):
         return get_movies_by_genres(genres, threshold)
     else :
         return matching_movies
+    
+def get_all_genres():
+    all_genres = []
+    for index, row in movie_data.iterrows():
+        movie_genres = [genre['name'] for genre in eval(row['genres'])]
+        all_genres.extend(movie_genres)
+    return list(set(all_genres)) # unique list
 
 def getActorsFromMovies(similarMovies):
     actors = []

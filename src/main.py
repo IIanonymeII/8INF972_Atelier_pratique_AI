@@ -1,32 +1,32 @@
-from flask import Flask, request, jsonify
-from actorsAlgorithm import castingAlgorithm as cast
-from flask_cors import CORS 
+from litestar import Litestar,Response,Request, MediaType
 
-app = Flask(__name__)
-CORS(app)
+from litestar.openapi import OpenAPIConfig
+import uvicorn
 
-@app.route('/', methods=['POST'])
-def receive_data():
-    data = request.json
-    # Access the data fields
-    budget_min = float(data['budgetMin'])
-    budget_max = float(data['budgetMax'])
-    selected_genres = data['selectedGenres']
-    selected_public = data['selectedPublic']
-    selected_goal = data['selectedGoal']
+from backend.api_gpt import ApiGpt
+from backend.test import Test
+from backend.actor import Actor
 
-    print("i get :")
-    print("budget min : ", budget_min)
-    print("budget max : ", budget_max)
-    print("genres : ", selected_genres)
-    print("selected public : ", selected_public)
-    print("selected goal : ", selected_goal)
 
-    
-    result = cast.findActorsBOXOFFICE(5, selected_genres, budget_min, budget_max)
+def value_error_handler(request: Request, exc: ValueError) -> Response:
+    return Response(
+        media_type=MediaType.TEXT,
+        content=f"value error: {exc}",
+        status_code=400,
+    )
 
-    # Return the result as JSON
-    return jsonify(result)
+
+app = Litestar(route_handlers=[ApiGpt,
+                               Test,
+                               Actor],
+               openapi_config=OpenAPIConfig(title="Cinema BackEnd", version="1.0.0"),
+               exception_handlers={ValueError: value_error_handler}
+            )
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    uvicorn.run(app, host="127.0.0.1", port=8000) # in a docker host="0.0.0.0"
+
+    # elements : 127.0.0.1/schema/elements
+    # swagger : 127.0.0.1/schema/swagger
+    # redoc : 127.0.0.1/schema/redoc
+    # ....
