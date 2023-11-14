@@ -55,6 +55,9 @@ def get_download_folder():
 current_directory = os.getcwd()
 file_path = os.path.join(current_directory, 'src', 'actorsAlgorithm', 'popularity_data.csv')
 instascrap_file = pd.read_csv(file_path, encoding='ISO-8859-1', sep=',')
+file_path_l = os.path.join(current_directory, 'src', 'actorsAlgorithm', 'personalities_data.csv')
+learning_file = pd.read_csv(file_path_l, encoding='ISO-8859-1', sep=',')
+
 
 ### GET FUNCTIONS ###
 def getGoogleTrendData(actor_name):
@@ -132,7 +135,7 @@ def interpretTrend(actor_name, trend_data, followers):
         # Check if the data has at least two points for linear regression
         if len(dates) < 2:
             print("Insufficient data for linear regression.")
-            return None
+            scrapActorGoogleTrends(actor_name)
 
         days_since_start = (dates - dates.min()).dt.days.values
         coefficients = np.polyfit(days_since_start, values, 1)
@@ -148,9 +151,9 @@ def interpretTrend(actor_name, trend_data, followers):
 
 def getNbFollowers(actor_name):
     actor_row = instascrap_file[instascrap_file['Actor'] == actor_name]
+    actor_row = learning_file[learning_file['Name'] == actor_name]
     if not actor_row.empty:
         nb_followers = actor_row['Followers'].values[0]
-        print(actor_name, " has ", nb_followers, " followers")
         nb_followers = pd.to_numeric(nb_followers, errors='coerce')
         return(nb_followers)
     else:
@@ -169,67 +172,37 @@ def calculateActorScore(actor_name):
 def addScoreToDataSet():
     actorDataNormalisation.cleanActorDataSet()
     scores = []
-    for index, row in instascrap_file.iterrows():
-        actor_name = row['Actor']
+    for index, row in learning_file.iterrows():
+    #for index, row in instascrap_file.iterrows():
+        #actor_name = row['Actor']
+        actor_name = row['Name']
         scores.append(calculateActorScore(actor_name))
-    instascrap_file['Score'] = scores
-    instascrap_file.to_csv('src/actorsAlgorithm/popularity_data.csv', index=False)
+    #instascrap_file['Score'] = scores
+    #instascrap_file.to_csv('src/actorsAlgorithm/popularity_data.csv', index=False)
+    learning_file['Score'] = scores
+    learning_file.to_csv('src/actorsAlgorithm/personalities_data.csv', index=False)
 
 def getStandardizedScore():
     addScoreToDataSet()
-    scores = instascrap_file['Score']
-    instascrap_file['Score'] = normCentreRed(scores)#normCentreRed(scores) #ou norm_standard(scores)
+    #scores = instascrap_file['Score']
+    scores = learning_file['Score']
+    #instascrap_file['Score'] = normCentreRed(scores)#normCentreRed(scores) #ou norm_standard(scores)
+    
 
-def norm_standard(scores):
-    # pas concluant après visualisation
-    min_score = min(scores)
-    max_score = max(scores)
-    scores_filled = scores.fillna(0)
-    normalized_scores = [int(((score - min_score) / (max_score - min_score)) * 100) for score in scores_filled]
+def showScoresRepartition():
+    scoresTest = instascrap_file['Score']
+    scoresLearning = learning_file['Score']
+    # Plotting
+    plt.figure(figsize=(10, 6))
+    plt.hist([scoresTest, scoresLearning], bins=20, alpha=0.7, label=['Scores Test', 'Scores Learning'])
 
-    instascrap_file['Score']=normalized_scores
-    instascrap_file.to_csv('src/popularity_scores.csv', index=False)
-    showScoresRepartition("actorScoresStandardises")
-    return(normalized_scores)
-
-def normCentreRed(scores):
-    # Remplacer les valeurs manquantes par la moyenne
-    mean_score = np.nanmean(scores)
-    scores_filled = scores.fillna(mean_score)
-
-    # Calcul de l'écart type
-    std_dev = np.nanstd(scores_filled)
-
-    # Normalisation centrée réduite
-    normalized_scores = [(score - mean_score) / std_dev for score in scores_filled]
-
-    # Rééchelonnage entre 0 et 100
-    min_normalized = min(normalized_scores)
-    max_normalized = max(normalized_scores)
-    scaled_scores = [int((score - min_normalized) / (max_normalized - min_normalized) * 100) for score in normalized_scores]
-
-    instascrap_file['Score']=scaled_scores
-    instascrap_file.to_csv('src/popularity_scores.csv', index=False)
-    showScoresRepartition("actorScoresNCR")
-
-    return normalized_scores
-
-def showScoresRepartition(filename):
-    scores = instascrap_file['Score']
-    score_counts = {}
-    for score in scores:
-        score_counts[score] = score_counts.get(score, 0) + 1
-    # Create lists for plotting
-    unique_scores = list(score_counts.keys())
-    actor_counts = [score_counts[score] for score in unique_scores]
-    save_path = "src/graphs/" + filename
-    # Plotting the graph
-    plt.bar(unique_scores, actor_counts, color='blue')
-    plt.xlabel('Scores')
-    plt.ylabel("Nombre d'acteurs")
-    plt.title("Etalement d'histogramme des scores")
-    plt.savefig(save_path)
+    plt.xlabel('Score Range')
+    plt.ylabel('Number of Persons')
+    plt.title('Score Repartition Comparison')
+    plt.savefig('src/graphs/scoresRepartition.png')
+    plt.legend()
+    plt.grid(True)
     plt.show()
 
-
-getStandardizedScore()
+#getStandardizedScore()
+showScoresRepartition()
