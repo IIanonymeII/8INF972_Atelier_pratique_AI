@@ -42,28 +42,57 @@ simulationButton.addEventListener('click', function() {
     selectedPublic: selectedPublic,
     selectedGoal: selectedGoal
 };
+
+
+
+
 // Make a POST request to your Python server
-fetch('http://localhost:5000/', {
-  method: 'POST',
+
+// ACTOR
+fetch("http://127.0.0.1:8000/actor?budget_min="+budgetMin+"&budget_max="+budgetMax+"&selected_genres="+selectedGenres, {
+  method: 'GET',
   headers: {
       'Content-Type': 'application/json',
   },
-  body: JSON.stringify(data),
 })
 .then(response => response.json())
 .then(result => {
-  console.log(result);
-  displayActors(result);
+  console.log(result.actors);
+  displayActors(result.actors);
 })
 .catch(error => {
   console.error('Error:', error);
 });
+
+
+// GPT
+fetch("http://127.0.0.1:8000/api_gpt?type_movie="+selectedGenres, {
+  method: 'GET',
+  headers: {
+      'Content-Type': 'application/json',
+  },
+})
+.then(response => response.json())
+.then(result => {
+  console.log(result.titre);
+  console.log(result.description);
+  displayFilm(result.titre)
+  displayDescription(result.description)
+})
+.catch(error => {
+  console.error('Error:', error);
+});
+
+
 
   // start and print the simulation
   simulationPan = document.getElementById('simulationResult');
   simulationPan.style.display = 'flex';
 
 });
+
+
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -120,4 +149,35 @@ function displayActors(actors) {
       liElement.appendChild(divElement);
       ulElement.appendChild(liElement);
   });
+}
+
+function displayFilm(titre) {
+  console.log("=== TITRE === ");
+
+  // Utilisez querySelector pour obtenir le premier élément correspondant à la classe
+  var titre_movie = document.querySelector(".titreSectionSimulation");
+
+  // Assurez-vous que l'élément est trouvé avant d'essayer de mettre à jour son contenu
+  if (titre_movie) {
+    titre_movie.innerHTML = '';
+    titre_movie.textContent = titre;
+  } else {
+    console.error("Element with class 'titreSectionSimulation' not found.");
+  }
+}
+
+
+function displayDescription(description) {
+  console.log("=== Description === ");
+
+  // Utilisez getElementById pour obtenir l'élément par son ID
+  var description_movie = document.getElementById("textSynopsis");
+
+  // Assurez-vous que l'élément est trouvé avant d'essayer de mettre à jour son contenu
+  if (description_movie) {
+    description_movie.innerHTML = '';
+    description_movie.textContent = description;
+  } else {
+    console.error("Element with ID 'textSynopsis' not found.");
+  }
 }

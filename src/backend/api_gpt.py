@@ -1,3 +1,4 @@
+import json
 from typing import Dict
 from litestar import Controller, get
 from api_gpt.src.gpt.request.request_class import find_movie_title,hazard_word
@@ -8,7 +9,7 @@ class ApiGpt(Controller):
 
     @get()
     async def list_movie(self, type_movie: str = "horror") -> Dict[str,str]:
-        if type_movie not in ["horror", "comedy", "action", "drama"]:
+        if type_movie not in ["Horror", "Comedy", "Action", "Drama"]:
             return {"Error": "Invalid movie type. Please choose from 'horror', 'comedy', 'action', 'drama'."}
 
 
@@ -18,4 +19,6 @@ class ApiGpt(Controller):
         print("\n ========= \n")
         print("Description:", description)
         
-        return {"Titre":title,"Description:": description}
+        json_movie = json.dumps({"titre": title,"description":description})
+
+        return json_movie

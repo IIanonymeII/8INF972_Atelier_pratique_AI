@@ -1,4 +1,5 @@
-from typing import Dict, Union
+import json
+from typing import Dict, List, Union
 from litestar import Controller, get
 
 from actorsAlgorithm import castingAlgorithm as cast
@@ -10,7 +11,7 @@ class Actor(Controller):
     @get()
     async def actors_algorithm(self, budget_min: Union[float,int], 
                                budget_max: Union[float,int],
-                               selected_genres: str = "Adventure"  ) -> Dict[str,str]:
+                               selected_genres: str = "Adventure"  ) -> List[str]:
         # data = request.json
         # Access the data fields
         # budget_min = float(data['budgetMin'])
@@ -42,9 +43,10 @@ class Actor(Controller):
 
         
         list_actor = cast.findActorsBOXOFFICE(5, selected_genres, budget_min, budget_max)
-        result = {f'actor_{i+1}': actor for i, actor in enumerate(list_actor)}
+        # result = {f'actor_{i+1}': actor for i, actor in enumerate(list_actor)}
 
         # print(result)
-        # Return the result as JSON
-        return result
+        # Convert the list to a JSON string
+        json_actor = json.dumps({"actors": list_actor})
+        return json_actor
         
