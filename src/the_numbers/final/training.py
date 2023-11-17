@@ -4,8 +4,10 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.decomposition import PCA
 import numpy as np
 from sklearn.metrics import mean_squared_error, make_scorer
-from sklearn.linear_model import Ridge, ElasticNet, Lasso
+from sklearn.linear_model import Ridge, ElasticNet, Lasso, LinearRegression
 import time
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import make_pipeline
 
 #Function used to save the models performance for a given month
 def save_to_csv(month, y_test, lasso_predictions, ridge_predictions, elastic_net_predictions, rf_predictions):
@@ -17,31 +19,61 @@ def save_to_csv(month, y_test, lasso_predictions, ridge_predictions, elastic_net
         'Random Forest predictions': rf_predictions
            }
     dataframe = pd.DataFrame(data)
-    dataframe.to_csv(f"src/the_numbers/model_month/model_month_{month}.csv", index=False)
+    dataframe.to_csv(f"../model_month/model_month_{month}.csv", index=False)
 
 # Record the start time
 start_time = time.time()
 
 # Load your dataset (replace 'your_dataset.csv' with your actual file)
-df = pd.read_csv('src/the_numbers/dataset.csv')
+df = pd.read_csv('../dataset.csv')
 
 #Looking at shape of dataset
 print("\nShape of dataset " + str(df.shape))
 
 # Specify the column you want to use for grouping
 grouping_column = 'Month'
-target_column = 'Total adjusted B.O'
+target_column = 'Profitability'
 
 # Get unique values in the specified column for grouping
 unique_values = df[grouping_column].unique()
 list_month = sorted(unique_values)
 
-#Lists for average rmse
-lasso_avg = []
-ridge_avg = []
-elastic_avg = []
-rf_avg = []
 num_iteration = 100000
+
+params = {
+    "Lasso": {
+        "model": Lasso(max_iter=num_iteration),
+        "grid": {'alpha': [0.001, 0.01, 0.1, 1.0, 10.0, 100.0]},
+        "predictions": []
+    },
+    "Ridge": {
+        "model": Ridge(max_iter=num_iteration),
+        "grid": {'alpha': [0.001, 0.01, 0.1, 1.0, 10.0, 100.0]},
+        "predictions": []
+    },
+    "ElasticNet": {
+        "model": ElasticNet(max_iter=num_iteration),
+        "grid": {
+            'alpha': [0.001, 0.01, 0.1, 1.0, 10.0, 100.0],
+            'l1_ratio': [0.1, 0.5, 0.7, 0.9]
+        },
+        "predictions": []
+    },
+    "RandomForestRegressor": {
+        "model": RandomForestRegressor(),
+        "grid": {
+            'n_estimators': [3, 30, 300]
+        },
+        "predictions": []
+    },
+    "Poly": {
+        "model": make_pipeline(PolynomialFeatures(), LinearRegression()),
+        "grid": {
+            'polynomialfeatures__degree': [1, 2, 3, 4, 5],  # Try different degrees
+        },
+        "predictions": []
+    }
+}
 
 # Iterate over unique values and train a Random Forest model for each value
 for value in list_month:
@@ -61,55 +93,17 @@ for value in list_month:
     X_pca = pca.fit_transform(X)
 
     X_train, X_test, y_train, y_test = train_test_split(X_pca, y, test_size=0.2, random_state=42)
-
-    lasso = Lasso(max_iter=num_iteration)
-    param_grid = {'alpha': [0.01, 0.1, 1.0, 10.0]}
-    grid_search = GridSearchCV(lasso, param_grid, cv=5, scoring='neg_mean_squared_error')
-    grid_search.fit(X_train, y_train)
-    best_lasso_model = grid_search.best_estimator_
-    lasso_predictions = best_lasso_model.predict(X_test)
-    lasso_rmse = mean_squared_error(y_test, lasso_predictions, squared=False)
-    print(f"Lasso RMSE on test set: {lasso_rmse}")
-    lasso_avg.append(lasso_rmse)
-
-    ridge = Ridge(max_iter=num_iteration)
-    param_grid = {'alpha': [0.01, 0.1, 1.0, 10.0]}
-    ridge_grid_search = GridSearchCV(ridge, param_grid, cv=5, scoring='neg_mean_squared_error')
-    ridge_grid_search.fit(X_train, y_train)
-    best_ridge_model = ridge_grid_search.best_estimator_
-    ridge_predictions = best_ridge_model.predict(X_test)
-    ridge_rmse = mean_squared_error(y_test, ridge_predictions, squared=False)
-    print(f"Ridge RMSE on test set: {ridge_rmse}")
-    ridge_avg.append(ridge_rmse)
-
-    elastic_net = ElasticNet(max_iter=num_iteration)
-    param_grid = {
-        'alpha': [0.01, 0.1, 1.0, 10.0],
-        'l1_ratio': [0.1, 0.5, 0.7, 0.9]
-    }
-    elastic_net_grid_search = GridSearchCV(elastic_net, param_grid, cv=5, scoring='neg_mean_squared_error')
-    elastic_net_grid_search.fit(X_train, y_train)
-    best_elastic_net_model = elastic_net_grid_search.best_estimator_
-    elastic_net_predictions = best_elastic_net_model.predict(X_test)
-    elastic_net_rmse = mean_squared_error(y_test, elastic_net_predictions, squared=False)
-    print(f"Elastic Net RMSE on test set: {elastic_net_rmse}")
-    elastic_avg.append(elastic_net_rmse)
-
-    rf_regressor = RandomForestRegressor()
-    n_estimators = [3, 30, 300]
-    param_grid = {
-        'n_estimators': n_estimators
-    }
-    grid_search = GridSearchCV(rf_regressor, param_grid, cv=5, scoring='neg_mean_squared_error')
-    grid_search.fit(X_train, y_train)
-    best_params = grid_search.best_params_
-    rmse_scorer = make_scorer(lambda y, y_pred: np.sqrt(mean_squared_error(y, y_pred)), greater_is_better=False)
-    best_rf_regressor = RandomForestRegressor(**best_params)
-    best_rf_regressor.fit(X_train, y_train)
-    rf_predictions = best_rf_regressor.predict(X_test)
-    rf_rmse = mean_squared_error(y_test, rf_predictions, squared=False)
-    print(f"Random forest RMSE on test set: {rf_rmse}")
-    rf_avg.append(rf_rmse)
+    for name in params:
+        param = params[name]
+        model = param["model"]
+        grid = param["grid"]
+        grid_search = GridSearchCV(model, grid, cv=10, scoring='neg_mean_squared_error')
+        grid_search.fit(X_train, y_train)
+        best_model = grid_search.best_estimator_
+        predictions = best_model.predict(X_test)
+        rmse = mean_squared_error(y_test, predictions, squared=False)
+        print(f"{name} RMSE on test set: {rmse}")
+        param["predictions"].append(rmse)
 
     #save_to_csv(value, y_test=y_test, lasso_predictions=lasso_predictions,
     #ridge_predictions=ridge_predictions, elastic_net_predictions=elastic_net_predictions, rf_predictions=rf_predictions)
@@ -122,8 +116,8 @@ elapsed_time = end_time - start_time
 
 print("\nTraining summary")
 print(f"Elapsed Time: {elapsed_time//60} minutes : {elapsed_time % 60} seconds")
-print(f"Lasso average RMSE {sum(lasso_avg)/len(lasso_avg)}")
-print(f"Ridge average RMSE {sum(ridge_avg)/len(ridge_avg)}")
-print(f"Elastic net average RMSE {sum(elastic_avg)/len(elastic_avg)}")
-print(f"Random Forest average RMSE {sum(rf_avg)/len(rf_avg)}")
+print(f"Lasso average RMSE {sum(params['Lasso']['predictions'])/len(params['Lasso']['predictions'])}")
+print(f"Ridge average RMSE {sum(params['Ridge']['predictions'])/len(params['Ridge']['predictions'])}")
+print(f"Elastic net average RMSE {sum(params['ElasticNet']['predictions'])/len(params['ElasticNet']['predictions'])}")
+print(f"Random Forest average RMSE {sum(params['RandomForestRegressor']['predictions'])/len(params['RandomForestRegressor']['predictions'])}")
 
