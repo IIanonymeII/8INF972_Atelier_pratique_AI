@@ -203,6 +203,68 @@ def getStandardizedScore(learning = False):
     
     #if necessary standardize scores here
 
+
+def trainLogarithmicRegression():
+    imputer = SimpleImputer(strategy='mean')
+    learning_file['Income'] = imputer.fit_transform(learning_file['Income'].values.reshape(-1, 1))
+    score = learning_file['Score'].values
+    income = learning_file['Income'].values
+    log_reg = LinearRegression()
+    score_log = np.log(score.reshape(-1, 1))
+    log_reg.fit(score_log, income)
+    slope = log_reg.coef_[0]
+    intercept = log_reg.intercept_
+    print(f'Logarithmic Regression Parameters: Slope={slope:.4f}, Intercept={intercept:.4f}')
+
+    return log_reg
+
+def predictUsingLogarithmicRegression(model):
+    imputer = SimpleImputer(strategy='mean')
+    instascrap_file['Score'] = imputer.fit_transform(instascrap_file['Score'].values.reshape(-1, 1))
+    test_score = instascrap_file['Score'].values
+    test_score = np.where(np.isnan(test_score), instascrap_file['Score'].mean(), test_score)
+    test_score_log = np.log(test_score.reshape(-1, 1))
+    test_score_log = np.where(np.isfinite(test_score_log), test_score_log, np.nan)
+    test_score_log = np.where(np.isfinite(test_score_log), test_score_log, np.nanmean(test_score_log))
+    predicted_income = model.predict(test_score_log)
+    instascrap_file['EstimatedIncome'] = predicted_income
+    instascrap_file.to_csv('src/actorsAlgorithm/popularity_data.csv', index=False)
+
+def trainPolynomialRegression(degree=2):
+    imputer = SimpleImputer(strategy='mean')
+    learning_file['Income'] = imputer.fit_transform(learning_file['Income'].values.reshape(-1, 1))
+    score = learning_file['Score'].values
+    income = learning_file['Income'].values
+
+    # Polynomial Regression
+    poly = PolynomialFeatures(degree=degree)
+    score_poly = poly.fit_transform(score.reshape(-1, 1))
+    poly_reg = LinearRegression()
+    poly_reg.fit(score_poly, income)
+
+    # Extracting coefficients
+    coefficients = poly_reg.coef_
+    intercept = poly_reg.intercept_
+    print(f'Polynomial Regression Parameters: Coefficients={coefficients}, Intercept={intercept:.4f}')
+
+    return poly_reg
+
+def predictUsingPolynomialRegression(model, degree=2):
+    imputer = SimpleImputer(strategy='mean')
+    instascrap_file['Score'] = imputer.fit_transform(instascrap_file['Score'].values.reshape(-1, 1))
+    test_score = instascrap_file['Score'].values
+    test_score = np.where(np.isnan(test_score), instascrap_file['Score'].mean(), test_score)
+
+    # Polynomial Regression
+    poly = PolynomialFeatures(degree=degree)
+    test_score_poly = poly.fit_transform(test_score.reshape(-1, 1))
+    predicted_income = model.predict(test_score_poly)
+
+    # Add the predicted values to a new column 'EstimatedIncome'
+    instascrap_file['EstimatedIncome'] = predicted_income
+    instascrap_file.to_csv('src/actorsAlgorithm/popularity_data.csv', index=False)
+
+
 ####################    
 ###VISUALISATION ###
 ####################
@@ -222,79 +284,132 @@ def showScoresRepartition():
     plt.show()
 
 def scoreIncomeRegression():
-    income = learning_file['Income']
-    score = learning_file['Score']
-
     # Handle missing values
     imputer = SimpleImputer(strategy='mean')
-    income_reshaped = np.array(imputer.fit_transform(income.values.reshape(-1, 1)))
+    learning_file['Income'] = imputer.fit_transform(learning_file['Income'].values.reshape(-1, 1))
 
-    # Reshape the data for regression
-    income_reshaped = np.array(income).reshape(-1, 1)
-    score_reshaped = np.array(score).reshape(-1, 1)
-    income_reshaped_imputed = imputer.fit_transform(income_reshaped)
+    # Group by the integer part of 'Score' and compute mean income
+    grouped_data = learning_file.groupby(learning_file['Score'].astype(int)).agg({'Income': 'mean'}).reset_index()
 
-    # Polynomial Regression
-    poly = PolynomialFeatures(degree=2)
-    income_poly = poly.fit_transform(income_reshaped_imputed)
-    poly_reg = LinearRegression()
-    poly_reg.fit(income_poly, score_reshaped)
-    score_poly_pred = poly_reg.predict(income_poly)
+    # Extract the relevant columns
+    score = grouped_data['Score'].values
+    mean_income = grouped_data['Income'].values
 
-    # Linear Regression
+    # Plot the grouped data
+    plt.scatter(score, mean_income, color='blue', label='Mean Income by Score')
+    plt.xlabel('Score')
+    plt.ylabel('Mean Income')
+    plt.title('Mean Income by Score Group')
+
+    # Apply Linear Regression
     lin_reg = LinearRegression()
-    lin_reg.fit(income_reshaped_imputed, score_reshaped)
-    score_lin_pred = lin_reg.predict(income_reshaped_imputed)
+    lin_reg.fit(score.reshape(-1, 1), mean_income)
+    score_lin_pred = lin_reg.predict(score.reshape(-1, 1))
+    rmse_lin = np.sqrt(mean_squared_error(mean_income, score_lin_pred))
+    plt.plot(score, score_lin_pred, color='red', label=f'Linear Regression (RMSE: {rmse_lin:.2f})')
 
-    # Logarithmic Regression
+    # Apply Logarithmic Regression
     log_reg = LinearRegression()
-    income_log = np.log(income_reshaped_imputed)
-    log_reg.fit(income_log, score_reshaped)
-    score_log_pred = log_reg.predict(income_log)
+    score_log = np.log(score)
+    log_reg.fit(score_log.reshape(-1, 1), mean_income)
+    score_log_pred = log_reg.predict(score_log.reshape(-1, 1))
+    rmse_log = np.sqrt(mean_squared_error(mean_income, score_log_pred))
+    plt.plot(score, score_log_pred, color='green', label=f'Logarithmic Regression (RMSE: {rmse_log:.2f})')
 
-    # Square Root Regression
+    # Apply Square Root Regression
     sqrt_reg = LinearRegression()
-    income_sqrt = np.sqrt(income_reshaped_imputed)
-    sqrt_reg.fit(income_sqrt, score_reshaped)
-    score_sqrt_pred = sqrt_reg.predict(income_sqrt)
+    score_sqrt = np.sqrt(score)
+    sqrt_reg.fit(score_sqrt.reshape(-1, 1), mean_income)
+    score_sqrt_pred = sqrt_reg.predict(score_sqrt.reshape(-1, 1))
+    rmse_sqrt = np.sqrt(mean_squared_error(mean_income, score_sqrt_pred))
+    plt.plot(score, score_sqrt_pred, color='purple', label=f'Square Root Regression (RMSE: {rmse_sqrt:.2f})')
 
-    # Plotting
-    plt.scatter(income, score, color='blue', label='Original data')
-    plt.plot(income, score_poly_pred, color='red', label='Polynomial Regression')
-    plt.plot(income, score_lin_pred, color='green', label='Linear Regression')
-    plt.plot(income, score_log_pred, color='purple', label='Logarithmic Regression')
-    plt.plot(income, score_sqrt_pred, color='orange', label='Square Root Regression')
-
-    plt.xlabel('Income')
-    plt.ylabel('Score')
+    # Apply Polynomial Regression
+    poly_reg = LinearRegression()
+    poly = PolynomialFeatures(degree=2)
+    score_poly = poly.fit_transform(score.reshape(-1, 1))
+    poly_reg.fit(score_poly, mean_income)
+    score_poly_pred = poly_reg.predict(score_poly)
+    rmse_poly = np.sqrt(mean_squared_error(mean_income, score_poly_pred))
+    plt.plot(score, score_poly_pred, color='orange', label=f'Polynomial Regression (RMSE: {rmse_poly:.2f})')
+    plt.save("src/graphs/meanIncomeByIntegerSalaryReg.png")
     plt.legend()
-
-    # Plot Errors
-    plt.figure()
-
-    # Ensure all arrays have the same shape
-    income = income.values.flatten()
-    score_poly_pred = score_poly_pred.flatten()
-    score_lin_pred = score_lin_pred.flatten()
-    score_log_pred = score_log_pred.flatten()
-    score_sqrt_pred = score_sqrt_pred.flatten()
-
-    plt.plot(income, score - score_poly_pred, color='red', label='Polynomial Regression Error')
-    plt.plot(income, score - score_lin_pred, color='green', label='Linear Regression Error')
-    plt.plot(income, score - score_log_pred, color='purple', label='Logarithmic Regression Error')
-    plt.plot(income, score - score_sqrt_pred, color='orange', label='Square Root Regression Error')
-
-    plt.xlabel('Income')
-    plt.ylabel('Error')
-    plt.legend()
-
     plt.show()
 
+def scoreEstimatedIncomeRegressionLog():
+    # Handle missing values
+    imputer = SimpleImputer(strategy='mean')
+    instascrap_file['EstimatedIncome'] = imputer.fit_transform(instascrap_file['EstimatedIncome'].values.reshape(-1, 1))
+
+    # Group by the integer part of 'Score' and compute mean income
+    grouped_data = instascrap_file.groupby(learning_file['Score'].astype(int)).agg({'EstimatedIncome': 'mean'}).reset_index()
+
+    # Extract the relevant columns
+    score = grouped_data['Score'].values
+    mean_income = grouped_data['EstimatedIncome'].values
+
+    # Plot the grouped data
+    plt.scatter(score, mean_income, color='blue', label='Mean Income by Score')
+    plt.xlabel('Score')
+    plt.ylabel('Mean Income')
+    plt.title('Mean Income by Score Group')
+
+    # Apply Logarithmic Regression
+    log_reg = LinearRegression()
+    score_log = np.log(score)
+    log_reg.fit(score_log.reshape(-1, 1), mean_income)
+    score_log_pred = log_reg.predict(score_log.reshape(-1, 1))
+    rmse_log = np.sqrt(mean_squared_error(mean_income, score_log_pred))
+    plt.plot(score, score_log_pred, color='green', label=f'Logarithmic Regression (RMSE: {rmse_log:.2f})')
+    plt.savefig("src/graphs/IncomeEstimationLog.png")
+    plt.legend()
+    plt.show()
+
+
+def scoreEstimatedIncomeRegressionPoly():
+    # Handle missing values
+    imputer = SimpleImputer(strategy='mean')
+    instascrap_file['EstimatedIncome'] = imputer.fit_transform(instascrap_file['EstimatedIncome'].values.reshape(-1, 1))
+
+    # Group by the integer part of 'Score' and compute mean income
+    grouped_data = instascrap_file.groupby(learning_file['Score'].astype(int)).agg({'EstimatedIncome': 'mean'}).reset_index()
+
+    # Extract the relevant columns
+    score = grouped_data['Score'].values
+    mean_income = grouped_data['EstimatedIncome'].values
+
+    # Plot the grouped data
+    plt.scatter(score, mean_income, color='blue', label='Mean Income by Score')
+    plt.xlabel('Score')
+    plt.ylabel('Mean Income')
+    plt.title('Mean Income by Score Group')
+
+    # Apply Polynomial Regression
+    poly_reg = LinearRegression()
+    poly = PolynomialFeatures(degree=2)
+    score_poly = poly.fit_transform(score.reshape(-1, 1))
+    poly_reg.fit(score_poly, mean_income)
+    score_poly_pred = poly_reg.predict(score_poly)
+    rmse_poly = np.sqrt(mean_squared_error(mean_income, score_poly_pred))
+    plt.plot(score, score_poly_pred, color='orange', label=f'Polynomial Regression (RMSE: {rmse_poly:.2f})')
+
+    plt.savefig("src/graphs/IncomeEstimationPoly.png")
+    plt.legend()
+    plt.show()
 
 ############
 ### TEST ###
 ############
 #getStandardizedScore(learning=True)
+
 #showScoresRepartition()
-scoreIncomeRegression()
+#scoreIncomeRegression()
+
+#log_reg_model = trainLogarithmicRegression()
+#predictUsingLogarithmicRegression(log_reg_model)
+#scoreEstimatedIncomeRegressionLog()
+
+poly_reg_model = trainPolynomialRegression()
+predictUsingPolynomialRegression(poly_reg_model)
+scoreEstimatedIncomeRegressionPoly()
 
