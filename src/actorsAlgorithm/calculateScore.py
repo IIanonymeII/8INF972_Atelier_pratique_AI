@@ -140,7 +140,7 @@ def interpretTrend(actor_name, trend_data, followers):
         days_since_start = (dates - dates.min()).dt.days.values
         coefficients = np.polyfit(days_since_start, values, 1)
         leading_coefficient = coefficients[0]
-        if followers != 0 :
+        if (followers != 0 and followers is not None) :
             score = math.log(followers)*(1+leading_coefficient)
         else : 
             score = 0
@@ -149,19 +149,22 @@ def interpretTrend(actor_name, trend_data, followers):
         scrapActorGoogleTrends(actor_name)
 
 
-def getNbFollowers(actor_name):
-    actor_row = instascrap_file[instascrap_file['Actor'] == actor_name]
-    actor_row = learning_file[learning_file['Name'] == actor_name]
+def getNbFollowers(actor_name, learning = False):
+    if learning:
+        actor_row = learning_file[learning_file['Name'] == actor_name]
+    else:
+        actor_row = instascrap_file[instascrap_file['Actor'] == actor_name]
     if not actor_row.empty:
-        nb_followers = actor_row['Followers'].values[0]
-        nb_followers = pd.to_numeric(nb_followers, errors='coerce')
-        return(nb_followers)
+            nb_followers = actor_row['Followers'].values[0]
+            nb_followers = pd.to_numeric(nb_followers, errors='coerce')
+            return(nb_followers)
     else:
         print("Can't access ", actor_name, "number of followers !")
         return(None)
 
-def calculateActorScore(actor_name):
-    followers = getNbFollowers(actor_name)
+
+def calculateActorScore(actor_name, learning=False):
+    followers = getNbFollowers(actor_name, learning)
     trend_data = getGoogleTrendData(actor_name)
     if trend_data is not None :
         score = interpretTrend(actor_name, trend_data, followers)
@@ -169,24 +172,32 @@ def calculateActorScore(actor_name):
         return(score)
     
 
-def addScoreToDataSet():
+def addScoreToDataSet(learning = False):
     actorDataNormalisation.cleanActorDataSet()
     scores = []
-    for index, row in learning_file.iterrows():
-    #for index, row in instascrap_file.iterrows():
-        #actor_name = row['Actor']
-        actor_name = row['Name']
-        scores.append(calculateActorScore(actor_name))
-    #instascrap_file['Score'] = scores
-    #instascrap_file.to_csv('src/actorsAlgorithm/popularity_data.csv', index=False)
-    learning_file['Score'] = scores
-    learning_file.to_csv('src/actorsAlgorithm/personalities_data.csv', index=False)
+    if learning:
+        file = learning_file
+        for index, row in file.iterrows():
+            actor_name = row['Name']
+            scores.append(calculateActorScore(actor_name, learning))
+        file['Score'] = scores
+        file.to_csv('src/actorsAlgorithm/personalities_data.csv', index=False)
+    else : 
+        file = instascrap_file
+        for index, row in file.iterrows():
+            actor_name = row['Actor']
+            scores.append(calculateActorScore(actor_name, learning))
+        instascrap_file['Score'] = scores
+        instascrap_file.to_csv('src/actorsAlgorithm/popularity_data.csv', index=False)
 
-def getStandardizedScore():
-    addScoreToDataSet()
-    #scores = instascrap_file['Score']
-    scores = learning_file['Score']
-    #instascrap_file['Score'] = normCentreRed(scores)#normCentreRed(scores) #ou norm_standard(scores)
+def getStandardizedScore(learning = False):
+    addScoreToDataSet(learning)
+    if (learning) : 
+        scores = learning_file['Score']
+    else:
+        scores = instascrap_file['Score']
+    
+    #if necessary standardize scores here
     
 
 def showScoresRepartition():
@@ -204,5 +215,5 @@ def showScoresRepartition():
     plt.grid(True)
     plt.show()
 
-#getStandardizedScore()
-showScoresRepartition()
+getStandardizedScore(learning=True)
+#showScoresRepartition()
