@@ -1,13 +1,17 @@
 
 import random
 import re
+from typing import List, Union
 from EdgeGPT.EdgeGPT import Chatbot, ConversationStyle
 import requests
 
 
-async def find_movie_title(type_movie: str, type_role : str = "oscar", word : str = "invention") -> str:
-    result: str = ""
-    prompt_movie = f"Crée une description de film d'{type_role} dans le genre {type_movie}, basée sur le mot du jour :{word}. Donne moi dans un premier temps le titre et ensuite la description du film et seulement ca. exemple Titre : ... \n Description : ..."
+async def find_movie_title(type_movie: Union[str,List[str]], type_role : str = "oscar", word : str = "invention") -> str:
+    if isinstance(type_movie,str):
+        type_movie = [type_movie]
+    
+    movies = ", ".join(type_movie)
+    prompt_movie = f"Crée une description de film de {movies} dans le genre {type_movie}, basée sur le mot du jour :{word}. Donne moi dans un premier temps le titre et ensuite la description du film et seulement ca. exemple Titre : ... \n Description : ..."
     conversation_style_movie = ConversationStyle.creative
 
     bot = await Chatbot.create()  # Passing cookies is "optional", as explained above

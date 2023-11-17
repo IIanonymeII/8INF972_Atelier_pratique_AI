@@ -1,38 +1,45 @@
-from litestar import Litestar,Response,Request, MediaType
+from flask import Flask, request, jsonify
+from actorsAlgorithm import castingAlgorithm as cast
+from flask_cors import CORS
+import asyncio
 
-from litestar.openapi import OpenAPIConfig
-import uvicorn
+from api_gpt.src.gpt.request.request_class import find_movie_title, hazard_word 
 
-from backend.api_gpt import ApiGpt
-from backend.test import Test
-from backend.actor import Actor
-from litestar.config.cors import CORSConfig
-
-cors_config = CORSConfig(allow_origins=["*"])
-
+app = Flask(__name__)
+CORS(app)
+# pip install asgiref
 
 
-def value_error_handler(request: Request, exc: ValueError) -> Response:
-    return Response(
-        media_type=MediaType.TEXT,
-        content=f"value error: {exc}",
-        status_code=400,
-    )
+
+@app.route('/', methods=['POST'])
+async def receive_data():
+    data = request.json
+    # Access the data fields
+    budget_min = float(data['budgetMin'])
+    budget_max = float(data['budgetMax'])
+    selected_genres = data['selectedGenres']
+    selected_public = data['selectedPublic']
+    selected_goal = data['selectedGoal']
+
+    print("i get :")
+    print("budget min : ", budget_min)
+    print("budget max : ", budget_max)
+    print("genres : ", selected_genres)
+    print("selected public : ", selected_public)
+    print("selected goal : ", selected_goal)
 
 
-app = Litestar(route_handlers=[ApiGpt,
-                               Test,
-                               Actor],
-               openapi_config=OpenAPIConfig(title="Cinema BackEnd", version="1.0.0"),
-               exception_handlers={ValueError: value_error_handler},
-               cors_config=cors_config
-            )
+    list_actor = cast.findActorsBOXOFFICE(5, selected_genres, budget_min, budget_max)
 
+    word = await hazard_word() 
+    title , description = await find_movie_title(type_movie=selected_genres,word=word)
+
+    result = {"actors": list_actor,
+              "titre": title,
+              "description":description}
+
+    # Return the result as JSON
+    return jsonify(result)
 
 if __name__ == '__main__':
-    uvicorn.run(app, host="127.0.0.1", port=8000) # in a docker host="0.0.0.0"
-
-    # elements : 127.0.0.1:8000/schema/elements
-    # swagger : 127.0.0.1:8000/schema/swagger
-    # redoc : 127.0.0.1:8000/schema/redoc
-    # ....
+    app.run(port=5000)

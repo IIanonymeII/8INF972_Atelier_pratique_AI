@@ -43,46 +43,24 @@ simulationButton.addEventListener('click', function() {
     selectedGoal: selectedGoal
 };
 
-
-
-
 // Make a POST request to your Python server
-
-// ACTOR
-fetch("http://127.0.0.1:8000/actor?budget_min="+budgetMin+"&budget_max="+budgetMax+"&selected_genres="+selectedGenres, {
-  method: 'GET',
+fetch('http://localhost:5000/', {
+  method: 'POST',
   headers: {
       'Content-Type': 'application/json',
   },
+  body: JSON.stringify(data),
 })
 .then(response => response.json())
 .then(result => {
-  console.log(result.actors);
+  console.log(result);
   displayActors(result.actors);
+  displayFilm(result.titre);
+  displayDescription(result.description);
 })
 .catch(error => {
   console.error('Error:', error);
 });
-
-
-// GPT
-fetch("http://127.0.0.1:8000/api_gpt?type_movie="+selectedGenres, {
-  method: 'GET',
-  headers: {
-      'Content-Type': 'application/json',
-  },
-})
-.then(response => response.json())
-.then(result => {
-  console.log(result.titre);
-  console.log(result.description);
-  displayFilm(result.titre)
-  displayDescription(result.description)
-})
-.catch(error => {
-  console.error('Error:', error);
-});
-
 
 
   // start and print the simulation

@@ -11,7 +11,7 @@ class Actor(Controller):
     @get()
     async def actors_algorithm(self, budget_min: Union[float,int], 
                                budget_max: Union[float,int],
-                               selected_genres: str = "Adventure"  ) -> List[str]:
+                               selected_genres: List[str] = ["Adventure"]  ) -> List[str]:
         # data = request.json
         # Access the data fields
         # budget_min = float(data['budgetMin'])
@@ -23,8 +23,10 @@ class Actor(Controller):
             # return {"error": }
             raise ValueError(f"Max bugdet is low that Min buget !!! : budget_min : {budget_min} - budget_max : {budget_max}")
         
-        if selected_genres not in cast.get_all_genres():
-            raise ValueError(f"Please select a proper genre, '{selected_genres}' not good. Here is a list of possible genres: {', '.join(cast.get_all_genres())}")
+        # Validate selected genres
+        for genre in selected_genres:
+            if genre not in cast.get_all_genres():
+                raise ValueError(f"Please select a proper genre, '{genre}' is not valid. Possible genres: {', '.join(cast.get_all_genres())}")
 
 
         budget_min = 1000

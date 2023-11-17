@@ -47,7 +47,7 @@ def create_driver():
     firefox_options = webdriver.FirefoxOptions()
     driver = webdriver.Firefox(service=FirefoxService(executable_path=GeckoDriverManager().install()), options=firefox_options)
     return driver
-driver = create_driver()
+# driver = create_driver()
 def waitForOneElement(driver, by, value):
     ignored_exceptions = (NoSuchElementException,StaleElementReferenceException)  # Ignore NoSuchElementException
     try:
