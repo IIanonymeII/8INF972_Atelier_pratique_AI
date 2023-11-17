@@ -72,9 +72,10 @@ def  findActorsBOXOFFICE(castSize, genres, budgetMin, budgetMax):
 
     candidates = getActorGenre(genres)
     [minActorSalary, maxActorSalary] = getSalaryBudget(castSize, genres, budgetMin, budgetMax) #la proportion du budget allouée aux salaire varie en fonction du genre et du budget voulu
-    candidates = filterCandidates(candidates, minActorSalary, maxActorSalary) #filtre par le salaire
-    #classe par ordre de popularité
+    candidates = filterCandidates(candidates, minActorSalary, maxActorSalary) #filtre par le salaire & classe par ordre de popularité
+   
     #retourne les castSize premiers
+    print(candidates)
     if candidates is not None :
         candidates = candidates[:castSize]
         #downloadActorsPictures(candidates)
@@ -170,10 +171,18 @@ def downloadActorsPictures(actors):
                     print("StaleElementReferenceException, ", actor)
                     time.sleep(2)
                     attempts += 1 
-            
+ 
 
 def filterCandidates(candidates, minActorSalary, maxActorSalary):
-    return(candidates)
+    popularity_data_filtered = popularity_data[
+        (popularity_data['Actor'].isin(candidates)) &
+        (minActorSalary < popularity_data['EstimatedIncome'] * 1000000) &
+        (popularity_data['EstimatedIncome'] * 1000000 < maxActorSalary)
+    ]
+
+    sortedCandidates = popularity_data_filtered.sort_values(by='Score', ascending=False)
+    result = list(sortedCandidates['Actor'])
+    return result
 
 def findActorsOSCAR():
     #tard plus
@@ -181,6 +190,6 @@ def findActorsOSCAR():
 
 
 ###TEST###
-#findActorsBOXOFFICE(5, ['Action'], 10000, 100000)
+findActorsBOXOFFICE(5, ['Action'], 1, 100000000) #rien pour moins d'un 0.5 Milliard de dollars...
 #print('matching movies : ',get_movies_by_genres(['Thriller', 'Comedy', 'Adventure', 'Action', 'Drama', 'Romance', 'Family', 'Horror', 'Animation'], 1))
 #print('cast : ', getActorsFromMovies(get_movies_by_genres(['Thriller', 'Comedy', 'Adventure', 'Action', 'Drama', 'Romance', 'Family', 'Horror', 'Animation'], 1)))
