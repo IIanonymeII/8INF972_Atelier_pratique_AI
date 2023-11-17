@@ -21,6 +21,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.metrics import mean_squared_error
 from sklearn.impute import SimpleImputer
+from scipy.optimize import curve_fit
 import math
 import shutil
 
@@ -199,7 +200,8 @@ def getStandardizedScore(learning = False):
         learning_file.dropna(subset=['Score'])
         learning_file.to_csv('src/actorsAlgorithm/personalities_data.csv', index=False)
     else:
-        scores = instascrap_file['Score']
+        instascrap_file.dropna(subset=['Score'])
+        instascrap_file.to_csv('src/actorsAlgorithm/popularity_data.csv', index=False)
     
     #if necessary standardize scores here
 
@@ -230,7 +232,7 @@ def predictUsingLogarithmicRegression(model):
     instascrap_file['EstimatedIncome'] = predicted_income
     instascrap_file.to_csv('src/actorsAlgorithm/popularity_data.csv', index=False)
 
-def trainPolynomialRegression(degree=2):
+def trainPolynomialRegression(degree=4):
     imputer = SimpleImputer(strategy='mean')
     learning_file['Income'] = imputer.fit_transform(learning_file['Income'].values.reshape(-1, 1))
     score = learning_file['Score'].values
@@ -249,7 +251,7 @@ def trainPolynomialRegression(degree=2):
 
     return poly_reg
 
-def predictUsingPolynomialRegression(model, degree=2):
+def predictUsingPolynomialRegression(model, degree=4):
     imputer = SimpleImputer(strategy='mean')
     instascrap_file['Score'] = imputer.fit_transform(instascrap_file['Score'].values.reshape(-1, 1))
     test_score = instascrap_file['Score'].values
@@ -282,6 +284,14 @@ def showScoresRepartition():
     plt.legend()
     plt.grid(True)
     plt.show()
+
+
+def exponential_regression(x, a, b):
+    return a * np.exp(b * x)
+
+def fit_exponential_curve(x_data, y_data):
+    popt, pcov = curve_fit(exponential_regression, x_data, y_data)
+    return popt
 
 def scoreIncomeRegression():
     # Handle missing values
@@ -326,13 +336,27 @@ def scoreIncomeRegression():
 
     # Apply Polynomial Regression
     poly_reg = LinearRegression()
-    poly = PolynomialFeatures(degree=2)
+    poly = PolynomialFeatures(degree=4)
     score_poly = poly.fit_transform(score.reshape(-1, 1))
     poly_reg.fit(score_poly, mean_income)
     score_poly_pred = poly_reg.predict(score_poly)
     rmse_poly = np.sqrt(mean_squared_error(mean_income, score_poly_pred))
     plt.plot(score, score_poly_pred, color='orange', label=f'Polynomial Regression (RMSE: {rmse_poly:.2f})')
-    plt.save("src/graphs/meanIncomeByIntegerSalaryReg.png")
+    plt.savefig("src/graphs/meanIncomeByIntegerSalaryReg.png")
+
+    # Apply exponential Regression
+    exp_reg = LinearRegression()
+    exp_params = fit_exponential_curve(score, mean_income)
+    score_exp_pred = exponential_regression(score, *exp_params)
+    rmse_exp = np.sqrt(mean_squared_error(mean_income, score_exp_pred))
+
+    # Plot and save
+    plt.scatter(score, mean_income, color='blue', label='Actual Data')
+    plt.plot(score, score_exp_pred, color='orange', label=f'Exponential Regression (RMSE: {rmse_exp:.2f})')
+    plt.legend()
+    plt.xlabel('Score')
+    plt.ylabel('Mean Income')
+    plt.savefig("src/graphs/meanIncomeByIntegerSalaryReg.png")
     plt.legend()
     plt.show()
 
@@ -403,7 +427,7 @@ def scoreEstimatedIncomeRegressionPoly():
 #getStandardizedScore(learning=True)
 
 #showScoresRepartition()
-#scoreIncomeRegression()
+scoreIncomeRegression()
 
 #log_reg_model = trainLogarithmicRegression()
 #predictUsingLogarithmicRegression(log_reg_model)
