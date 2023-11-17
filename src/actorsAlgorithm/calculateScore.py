@@ -7,7 +7,6 @@ from io import StringIO
 from datetime import datetime
 import actorDataNormalisation
 import matplotlib.pyplot as plt
-import os
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -18,6 +17,10 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.keys import Keys
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.metrics import mean_squared_error
+from sklearn.impute import SimpleImputer
 import math
 import shutil
 
@@ -193,13 +196,16 @@ def addScoreToDataSet(learning = False):
 def getStandardizedScore(learning = False):
     addScoreToDataSet(learning)
     if (learning) : 
-        scores = learning_file['Score']
+        learning_file.dropna(subset=['Score'])
+        learning_file.to_csv('src/actorsAlgorithm/personalities_data.csv', index=False)
     else:
         scores = instascrap_file['Score']
     
     #if necessary standardize scores here
-    
 
+####################    
+###VISUALISATION ###
+####################
 def showScoresRepartition():
     scoresTest = instascrap_file['Score']
     scoresLearning = learning_file['Score']
@@ -215,5 +221,80 @@ def showScoresRepartition():
     plt.grid(True)
     plt.show()
 
-getStandardizedScore(learning=True)
+def scoreIncomeRegression():
+    income = learning_file['Income']
+    score = learning_file['Score']
+
+    # Handle missing values
+    imputer = SimpleImputer(strategy='mean')
+    income_reshaped = np.array(imputer.fit_transform(income.values.reshape(-1, 1)))
+
+    # Reshape the data for regression
+    income_reshaped = np.array(income).reshape(-1, 1)
+    score_reshaped = np.array(score).reshape(-1, 1)
+    income_reshaped_imputed = imputer.fit_transform(income_reshaped)
+
+    # Polynomial Regression
+    poly = PolynomialFeatures(degree=2)
+    income_poly = poly.fit_transform(income_reshaped_imputed)
+    poly_reg = LinearRegression()
+    poly_reg.fit(income_poly, score_reshaped)
+    score_poly_pred = poly_reg.predict(income_poly)
+
+    # Linear Regression
+    lin_reg = LinearRegression()
+    lin_reg.fit(income_reshaped_imputed, score_reshaped)
+    score_lin_pred = lin_reg.predict(income_reshaped_imputed)
+
+    # Logarithmic Regression
+    log_reg = LinearRegression()
+    income_log = np.log(income_reshaped_imputed)
+    log_reg.fit(income_log, score_reshaped)
+    score_log_pred = log_reg.predict(income_log)
+
+    # Square Root Regression
+    sqrt_reg = LinearRegression()
+    income_sqrt = np.sqrt(income_reshaped_imputed)
+    sqrt_reg.fit(income_sqrt, score_reshaped)
+    score_sqrt_pred = sqrt_reg.predict(income_sqrt)
+
+    # Plotting
+    plt.scatter(income, score, color='blue', label='Original data')
+    plt.plot(income, score_poly_pred, color='red', label='Polynomial Regression')
+    plt.plot(income, score_lin_pred, color='green', label='Linear Regression')
+    plt.plot(income, score_log_pred, color='purple', label='Logarithmic Regression')
+    plt.plot(income, score_sqrt_pred, color='orange', label='Square Root Regression')
+
+    plt.xlabel('Income')
+    plt.ylabel('Score')
+    plt.legend()
+
+    # Plot Errors
+    plt.figure()
+
+    # Ensure all arrays have the same shape
+    income = income.values.flatten()
+    score_poly_pred = score_poly_pred.flatten()
+    score_lin_pred = score_lin_pred.flatten()
+    score_log_pred = score_log_pred.flatten()
+    score_sqrt_pred = score_sqrt_pred.flatten()
+
+    plt.plot(income, score - score_poly_pred, color='red', label='Polynomial Regression Error')
+    plt.plot(income, score - score_lin_pred, color='green', label='Linear Regression Error')
+    plt.plot(income, score - score_log_pred, color='purple', label='Logarithmic Regression Error')
+    plt.plot(income, score - score_sqrt_pred, color='orange', label='Square Root Regression Error')
+
+    plt.xlabel('Income')
+    plt.ylabel('Error')
+    plt.legend()
+
+    plt.show()
+
+
+############
+### TEST ###
+############
+#getStandardizedScore(learning=True)
 #showScoresRepartition()
+scoreIncomeRegression()
+
