@@ -54,7 +54,7 @@ fetch('http://localhost:5000/', {
 .then(response => response.json())
 .then(result => {
   console.log(result);
-  displayActors(result.actors);
+  displayActors(result.actors,result.img_actors);
   displayFilm(result.titre);
   displayDescription(result.description);
 })
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-function displayActors(actors) {
+function displayActors(actors,img_actor) {
   var ulElement = document.getElementById('listeDistribution');
   ulElement.innerHTML = '';// Clear any existing content
 
@@ -110,12 +110,13 @@ function displayActors(actors) {
 
       // Create div element
       var divElement = document.createElement('div');
+      divElement.className="actorImage";
 
       // Create img element
       var imgElement = document.createElement('img');
       
       //imgElement.src = "../../src/actorPictures/"+ actor+".png"
-      imgElement.src = "/pictures/Acteur1.png";  // default if previous path does not exist
+      imgElement.src = img_actor[index];  // default if previous path does not exist
       
       // Create div for actor name
       var actorNameDiv = document.createElement('div');
