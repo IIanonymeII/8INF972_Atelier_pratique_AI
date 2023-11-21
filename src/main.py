@@ -28,7 +28,7 @@ async def receive_data():
     print("genres : ", selected_genres)
     print("selected public : ", selected_public)
     print("selected goal : ", selected_goal)
-
+    budget_min = max(budget_min,1)
 
     list_actor = cast.findActorsBOXOFFICE(5, selected_genres, budget_min, budget_max)
     list_actor_img = fetch_actor_images(list_actor)

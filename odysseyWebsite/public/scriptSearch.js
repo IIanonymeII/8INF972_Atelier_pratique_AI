@@ -1,5 +1,52 @@
 const unlogButton = document.getElementById('unlogButton');
-const simulationButton = document.getElementById('launchSimulation')
+const simulationButton = document.getElementById('launchSimulation');
+const loadingAnimation = document.getElementById('loadingAnimation');
+const simulationPanel = document.getElementById('simulationResult');
+
+// Function to hide content and display loading animation
+function showLoadingAnimation() {
+  loadingAnimation.style.display = 'block';
+  simulationPanel.style.display = 'none'
+}
+
+// Function to hide loading animation and display content
+function hideLoadingAnimationAndDisplayContent() {
+
+  loadingAnimation.style.display = 'none';
+  simulationPanel.style.display = 'flex'; 
+}
+
+// Function to stop loading animation
+function stopLoading(intervalId) {
+  clearInterval(intervalId);
+  hideLoadingAnimationAndDisplayContent();
+}
+
+// Function to start loading animation
+function startLoading() {
+  showLoadingAnimation();
+
+  var intervalId = setInterval(function() {
+    var text = loadingAnimation.innerText;
+    switch (text) {
+      case 'Loading.':
+        loadingAnimation.innerText = 'Loading..';
+        break;
+      case 'Loading..':
+        loadingAnimation.innerText = 'Loading...';
+        break;
+      case 'Loading...':
+        loadingAnimation.innerText = 'Loading.';
+        break;
+      default:
+        loadingAnimation.innerText = 'Loading.';
+        break;
+    }
+  }, 1000); // Change the duration between switches (in milliseconds)
+
+  return intervalId; // Return intervalId to stop later
+}
+
 
 
 unlogButton.addEventListener('click', function() {
@@ -8,6 +55,7 @@ unlogButton.addEventListener('click', function() {
 });
 
 simulationButton.addEventListener('click', function() {
+  
   // Budget
   var budgetMin = document.getElementById('value1').innerHTML;
   var budgetMax = document.getElementById('value2').innerHTML;
@@ -43,6 +91,8 @@ simulationButton.addEventListener('click', function() {
     selectedGoal: selectedGoal
 };
 
+var intervalId = startLoading();
+
 // Make a POST request to your Python server
 fetch('http://localhost:5000/', {
   method: 'POST',
@@ -57,15 +107,12 @@ fetch('http://localhost:5000/', {
   displayActors(result.actors,result.img_actors);
   displayFilm(result.titre);
   displayDescription(result.description);
+  stopLoading(intervalId);
 })
 .catch(error => {
+  stopLoading(intervalId);
   console.error('Error:', error);
 });
-
-
-  // start and print the simulation
-  simulationPan = document.getElementById('simulationResult');
-  simulationPan.style.display = 'flex';
 
 });
 
