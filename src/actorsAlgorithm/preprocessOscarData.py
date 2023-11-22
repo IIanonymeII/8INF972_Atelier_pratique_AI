@@ -102,9 +102,28 @@ def mergeDataSets():
 })
     grouped_data.to_csv('src/actorsAlgorithm/recompense_data.csv')
 
+def addRecScore():
+    file_path = os.path.join(current_directory, 'src', 'actorsAlgorithm', 'recompense_data.csv')
+    recompense_data = pd.read_csv(file_path, encoding='ISO-8859-1', sep=',')
+    recScores = []
+
+    for index, row in recompense_data.iterrows():
+        score = 0
+        if row['WinGG']:
+            score += 1
+        if row['WinBAFTA']:
+            score += 1
+        if row['WinSAG']:
+            score += 1
+        recScores.append(score)
+
+    recompense_data['Score'] = recScores
+    recompense_data.to_csv('src/actorsAlgorithm/recompense_data.csv', index=False)
+
 
 ##########
 ###TEST###
 ##########
 #cleanDataSets()
 #mergeDataSets()
+#addRecScore()

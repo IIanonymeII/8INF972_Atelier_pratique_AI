@@ -22,9 +22,8 @@ async def receive_data():
     selected_public = data['selectedPublic']
     selected_goal = data['selectedGoal']
     budget_min = max(budget_min,1)
-    print("goal : ", selected_goal)
     if selected_goal == "Oscar":
-        cast.findActorsOSCAR(5, selected_genres, budget_min, budget_max)
+        list_actor = cast.findActorsOSCAR(5, selected_genres, budget_min, budget_max)
     else :
         list_actor = cast.findActorsBOXOFFICE(5, selected_genres, budget_min, budget_max)
     list_actor_img = fetch_actor_images(list_actor)

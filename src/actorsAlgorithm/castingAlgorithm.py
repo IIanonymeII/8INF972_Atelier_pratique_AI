@@ -2,15 +2,7 @@
 import pandas as pd
 import os
 import random
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import StaleElementReferenceException
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.common.keys import Keys
+from flask import jsonify
 
 ################
 ### DATASETS ###
@@ -29,8 +21,8 @@ credits_data = pd.read_csv(file_path)
 file_path = os.path.join(current_directory, 'src', 'actorsAlgorithm', 'popularity_data.csv')
 popularity_data = pd.read_csv(file_path, encoding='ISO-8859-1', sep=',')
 # oscar dataset
-file_path = os.path.join(current_directory, 'src', 'Kaggle_dataset', 'oscardata_acting.csv')
-oscar_data = pd.read_csv(file_path, encoding='ISO-8859-1', sep=',')
+file_path = os.path.join(current_directory, 'src', 'actorsAlgorithm', 'recompense_data.csv')
+recompense_data = pd.read_csv(file_path, encoding='ISO-8859-1', sep=',')
 
 
 #################
@@ -63,21 +55,35 @@ def findActorsOSCAR(castSize, genres, budgetMin, budgetMax):
     # budgetMin / budgetMax : selection par le slider
 
     candidates = getActorGenre(genres)
-    [minActorSalary, maxActorSalary] = getSalaryBudget(castSize, genres, budgetMin, budgetMax) #la proportion du budget allouée aux salaire varie en fonction du genre et du budget voulu
-    candidates = filterCandidates(candidates, minActorSalary, maxActorSalary) #filtre par le salaire & classe par ordre de popularité
-    
-    #filtrage OSCAR
-    
-    #retourne les castSize premiers
-    print(candidates)
-    if candidates is not None :
-        #random sur les castSize*2 premiers pour ne pas retourner toujours les mêmes
-        if len(candidates)>2*castSize:
-            candidates = candidates[:2*castSize]
-            random.shuffle(candidates)
-        random_candidates = candidates[:castSize]
-        return random_candidates
-    else :
+    [minActorSalary, maxActorSalary] = getSalaryBudget(castSize, genres, budgetMin, budgetMax)
+    candidates = filterCandidates(candidates, minActorSalary, maxActorSalary)
+
+    rec_candidates = []
+
+    # filtrage OSCAR
+    for actor in candidates:
+        if actor in recompense_data['nominee'].values:
+            score = recompense_data.loc[recompense_data['nominee'] == actor, 'Score'].values[0]
+            rec_candidates.append({'Actor': actor, 'Score': score})
+
+    rec_candidates = pd.DataFrame(rec_candidates)
+    rec_candidates = rec_candidates.sort_values(by='Score', ascending=False)
+    list_rec_candidates = rec_candidates['Actor'].tolist()
+
+    # retourne les castSize premiers
+    print("candidates rec : ", list_rec_candidates)
+    if list_rec_candidates:
+        # random sur les castSize*2 premiers pour ne pas retourner toujours les mêmes
+        if len(list_rec_candidates) > 2 * castSize:
+            list_rec_candidates = random.sample(list_rec_candidates[:2*castSize], castSize)
+        list_rec_candidates = list_rec_candidates[:castSize]
+        return list_rec_candidates
+    elif not list_rec_candidates:
+        if len(candidates) > 2 * castSize:
+            candidates = random.sample(candidates[2*castSize], castSize)
+        candidates = candidates[:castSize]
+        return candidates
+    else:
         return None
 
 def getActorGenre(genres):
