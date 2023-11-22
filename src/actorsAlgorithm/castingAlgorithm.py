@@ -15,11 +15,7 @@ from selenium.webdriver.common.keys import Keys
 ################
 ### DATASETS ###
 ################
-# current_directory = os.getcwd()  # le probleme c'est que il retourn le repertoire de travail courant, c'est  dire à partir d'ou le fichier principal est lancé, ex: si je le lance a la racine et que j'appel ce fichier il va retourné C: et pas ou le fichier castingAlgorithm.py est
-
-# Obtenez le chemin absolu du fichier
 file_path = os.path.abspath(__file__)
-# Obtenez le répertoire du fichier
 file_directory = os.path.dirname(file_path)
 current_directory = os.path.dirname(os.path.dirname(file_directory))
 
@@ -36,28 +32,6 @@ popularity_data = pd.read_csv(file_path, encoding='ISO-8859-1', sep=',')
 file_path = os.path.join(current_directory, 'src', 'Kaggle_dataset', 'oscardata_acting.csv')
 oscar_data = pd.read_csv(file_path, encoding='ISO-8859-1', sep=',')
 
-
-#######################
-### SCRAPPING UTILS ###
-#######################
-def create_driver():
-    firefox_options = webdriver.FirefoxOptions()
-    driver = webdriver.Firefox(service=FirefoxService(executable_path=GeckoDriverManager().install()), options=firefox_options)
-    return driver
-# driver = create_driver()
-def waitForOneElement(driver, by, value):
-    ignored_exceptions = (NoSuchElementException,StaleElementReferenceException)  # Ignore NoSuchElementException
-    try:
-        return WebDriverWait(driver, 10, ignored_exceptions=ignored_exceptions).until(
-            EC.presence_of_element_located((by, value))
-        )
-    except TimeoutException:
-        return None
-
-def get_download_folder():
-    home_directory = os.path.expanduser("~")
-    download_folder = os.path.join(home_directory, "Downloads")
-    return download_folder
 
 #################
 ### ALGORITHM ###
@@ -83,6 +57,28 @@ def  findActorsBOXOFFICE(castSize, genres, budgetMin, budgetMax):
     else :
         return None
 
+def findActorsOSCAR(castSize, genres, budgetMin, budgetMax):
+    # castSize : nombre d'acteurs à retourner
+    # genres : liste des genres selectionnés par l'utilisateur
+    # budgetMin / budgetMax : selection par le slider
+
+    candidates = getActorGenre(genres)
+    [minActorSalary, maxActorSalary] = getSalaryBudget(castSize, genres, budgetMin, budgetMax) #la proportion du budget allouée aux salaire varie en fonction du genre et du budget voulu
+    candidates = filterCandidates(candidates, minActorSalary, maxActorSalary) #filtre par le salaire & classe par ordre de popularité
+    
+    #filtrage OSCAR
+    
+    #retourne les castSize premiers
+    print(candidates)
+    if candidates is not None :
+        #random sur les castSize*2 premiers pour ne pas retourner toujours les mêmes
+        if len(candidates)>2*castSize:
+            candidates = candidates[:2*castSize]
+            random.shuffle(candidates)
+        random_candidates = candidates[:castSize]
+        return random_candidates
+    else :
+        return None
 
 def getActorGenre(genres):
     print("genres for candidates: ", genres)
@@ -122,7 +118,8 @@ def getActorsFromMovies(similarMovies):
     return(actors)
 
 def getSalaryBudget(castSize, genres, budgetMin, budgetMax):
-    coef = 1.7
+    coef = 1.7 #les chiffres utilisés ont été recueillis d'après une étude du CNC sur des films francais
+    #nous utilisons un coefficient multiplicateur correspondant à l'ecart de budget entre films americains et francais
     if ('Documentaire' and 'Animation' in genres):
         proportion = coef*(0.04+0.13)/2
     elif ('Animation' in genres):
@@ -147,12 +144,4 @@ def filterCandidates(candidates, minActorSalary, maxActorSalary):
     result = list(sortedCandidates['Actor'])
     return result
 
-def findActorsOSCAR():
-    #tard plus
-    True
 
-
-###TEST###
-#findActorsBOXOFFICE(5, ['Action'], 1, 100000000) #rien pour moins d'un 0.5 Milliard de dollars...
-#print('matching movies : ',get_movies_by_genres(['Thriller', 'Comedy', 'Adventure', 'Action', 'Drama', 'Romance', 'Family', 'Horror', 'Animation'], 1))
-#print('cast : ', getActorsFromMovies(get_movies_by_genres(['Thriller', 'Comedy', 'Adventure', 'Action', 'Drama', 'Romance', 'Family', 'Horror', 'Animation'], 1)))

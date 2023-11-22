@@ -21,16 +21,12 @@ async def receive_data():
     selected_genres = data['selectedGenres']
     selected_public = data['selectedPublic']
     selected_goal = data['selectedGoal']
-
-    print("i get :")
-    print("budget min : ", budget_min)
-    print("budget max : ", budget_max)
-    print("genres : ", selected_genres)
-    print("selected public : ", selected_public)
-    print("selected goal : ", selected_goal)
     budget_min = max(budget_min,1)
-
-    list_actor = cast.findActorsBOXOFFICE(5, selected_genres, budget_min, budget_max)
+    print("goal : ", selected_goal)
+    if selected_goal == "Oscar":
+        cast.findActorsOSCAR(5, selected_genres, budget_min, budget_max)
+    else :
+        list_actor = cast.findActorsBOXOFFICE(5, selected_genres, budget_min, budget_max)
     list_actor_img = fetch_actor_images(list_actor)
 
     word = await hazard_word() 
