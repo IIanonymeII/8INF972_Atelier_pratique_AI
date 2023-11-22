@@ -1,10 +1,7 @@
 #AUTHOR : Diane Lantran
 import pandas as pd
 import os
-import json
-import time
-import csv
-import requests
+import random
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -77,9 +74,12 @@ def  findActorsBOXOFFICE(castSize, genres, budgetMin, budgetMax):
     #retourne les castSize premiers
     print(candidates)
     if candidates is not None :
-        candidates = candidates[:castSize]
-        #downloadActorsPictures(candidates)
-        return candidates
+        #random sur les castSize*2 premiers pour ne pas retourner toujours les mêmes
+        if len(candidates)>2*castSize:
+            candidates = candidates[:2*castSize]
+            random.shuffle(candidates)
+        random_candidates = candidates[:castSize]
+        return random_candidates
     else :
         return None
 
@@ -122,56 +122,19 @@ def getActorsFromMovies(similarMovies):
     return(actors)
 
 def getSalaryBudget(castSize, genres, budgetMin, budgetMax):
+    coef = 1.7
     if ('Documentaire' and 'Animation' in genres):
-        proportion = (0.04+0.13)/2
+        proportion = coef*(0.04+0.13)/2
     elif ('Animation' in genres):
-        proportion = 0.13
+        proportion = coef*0.13
     elif ('Documentaire' in genres):
-        proportion = 0.04        
+        proportion = coef*0.04        
     else:
-        proportion = 0.1
+        proportion = coef*0.1
     min = budgetMin*proportion/castSize
     max = budgetMax*proportion/castSize
     salaryBudget = [min, max]    
-    return(salaryBudget)
-
-def downloadActorsPictures(actors):
-    for actor in actors:
-        attempts = 0
-        success = False
-        while((attempts < 2) and (success == False) ):
-                driver.get('https://www.imdb.com/')
-                try:
-                    search_box = waitForOneElement(driver, By.ID, 'suggestion-search')
-
-                    if search_box:
-                        search_box.clear()
-                        search_box.send_keys(f'{actor}')
-                        search_box.send_keys(Keys.RETURN)
-
-                        first_result = waitForOneElement(driver, By.CLASS_NAME, 'ipc-metadata-list-summary-item__t')
-                        if first_result:
-                            first_result.click()
-
-                            result_thumbnail = waitForOneElement(driver, By.CLASS_NAME, 'ipc-image')
-
-                            if result_thumbnail:
-                                print("image found")
-                                image_url = result_thumbnail.get_attribute('src')
-                                response = requests.get(image_url)
-                                if response.status_code == 200:
-                                    file_path = os.path.join(current_directory, "src", "actorPictures", f"{actor}.png")
-                                    with open(file_path, 'wb') as file:
-                                        file.write(response.content)
-
-                        success = True
-                    attempts +=1
-
-                except StaleElementReferenceException:
-                    print("StaleElementReferenceException, ", actor)
-                    time.sleep(2)
-                    attempts += 1 
- 
+    return(salaryBudget) 
 
 def filterCandidates(candidates, minActorSalary, maxActorSalary):
     popularity_data_filtered = popularity_data[
@@ -190,6 +153,6 @@ def findActorsOSCAR():
 
 
 ###TEST###
-findActorsBOXOFFICE(5, ['Action'], 1, 100000000) #rien pour moins d'un 0.5 Milliard de dollars...
+#findActorsBOXOFFICE(5, ['Action'], 1, 100000000) #rien pour moins d'un 0.5 Milliard de dollars...
 #print('matching movies : ',get_movies_by_genres(['Thriller', 'Comedy', 'Adventure', 'Action', 'Drama', 'Romance', 'Family', 'Horror', 'Animation'], 1))
 #print('cast : ', getActorsFromMovies(get_movies_by_genres(['Thriller', 'Comedy', 'Adventure', 'Action', 'Drama', 'Romance', 'Family', 'Horror', 'Animation'], 1)))
