@@ -1,3 +1,6 @@
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
 .tarif_section{
     width: 100%;
     background: #F193B2;
@@ -37,32 +40,144 @@ body{
     align-items: flex-start;
 }
 
-.menuBar{
-    width: 98%;
-    height: 75px;
+.container {
     position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.section {
+    width: 100%;
+    height: 100vh;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: #FBCE9E;
-    flex-direction: row-reverse;
-    justify-content:flex-start;
-    padding-inline-end: 2%;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.m-auto {
+    margin: auto !important
+}
+
+.tagline {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1em;
+    background: linear-gradient(84deg, #01b9c4 0%, #76caad 25%, #f7c596 48.44%, #f08b50 72.92%, #e590ae 100%);
+    background-clip: border-box;
+    text-transform: uppercase;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline;
+    margin-bottom: 0.5rem;
+}
+
+.unlimited-main-title {
+    color: #eaf2fb;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+  }
+
+.text-content {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #eaf2fb;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+}
+
+.primary-btn {
+    width: fit-content;
+    height: fit-content;
+    background-color: #FBCE9E;
+    border: none;
+    border-radius: 8px;
+    transition-duration: 0.2s;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    color: #040b13;
+    padding: 8px 16px;
+  }
+
+.images-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: center;
+}
+
+.img-container {
+    width: 12%; /* Set the desired percentage width */
+    margin: auto; /* Center the container horizontally */
+}
+
+.img-container img {
+    width: 100%; /* Set the image width to 100% of its container */
+    height: auto; /* Maintain the aspect ratio of the image */
+    display: block; /* Remove any extra spacing below the image */
+}
+
+.img-border {
+    border: 4px solid white; /* Adjust the border size as needed */
+    border-radius: 50%;
+    padding: 15px;
+}
+
+.mt-2, .my-2 {
+    margin-top: 0.5rem !important;
+}
+
+.logoMainImage {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.menuBar{
+    width: 100%;
+    height: 75px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    background: #1c56887f;
+    justify-content: space-between;
+    position: absolute;
 }
 
 .menuLogo{
-    width: 73px;
-    height: 65px;
+    width: 50px;
+    height: 50px;
     display:flex;
+    padding-left: 30px;
+}
+
+.dark_description_bg {
+    background-color: #00000085;
+    padding: 50px;
+    border-radius: 20px;
 }
 
 .menuLogin{
     text-align: right;
     color: #1C5588;
-    font-size: 50px;
-    font-family: Lato; 
+    font-size: 22px;
     font-weight: 400;
     word-wrap: break-word;
+    padding-right: 30px;
+    cursor: pointer;
+    color: #FBCE9E;
 }
 
 .presentationDiv{
@@ -225,3 +340,81 @@ input[type="radio"] {
     font-weight: bold;
     color: rgb(255, 0, 0);
   }
+
+#section5, #section6 {
+    display: block;
+}
+
+.offers-title {
+    width: 100%;
+    background-color: #000000b4;
+    color: white;
+    padding: 20px 0px;
+    text-align: center;
+}
+.offers-title h1 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 37px;
+    line-height: 24px;
+    letter-spacing: 0.1em;
+    background: linear-gradient(84deg, #01b9c4 0%, #76caad 25%, #f7c596 48.44%, #f08b50 72.92%, #e590ae 100%);
+    background-clip: border-box;
+    text-transform: uppercase;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline;
+    margin-bottom: 0.5rem;
+}
+
+.offers-content {
+    display: flex;
+    justify-content: space-around;
+    width: 80%; /* Adjust the width of the content area */
+    margin: auto;
+    margin-top: 10%;
+    height: 100vh;
+}
+
+.offers-box {
+    flex: 1;
+    background-color: #ffffffad;
+    padding: 20px;
+    margin: 0 10px; /* Adjust the spacing between boxes */
+    box-sizing: border-box;
+    text-align: center;
+    height: 50%;
+    border-radius: 25px;
+}
+
+.offer-title {
+    border-image: linear-gradient(84deg, #01b9c4 0%, #76caad 25%, #f7c596 48.44%, #f08b50 72.92%, #e590ae 100%);
+    border-width: 2px;
+    border-style: solid;
+    border-image-slice: 1;
+    padding: 15px 0px;
+}
+
+.offer-price {
+    font-size: 15px;
+    text-decoration: underline;
+}
+
+.offer-description {
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+.team-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - 90px);
+}
+.team-container img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}

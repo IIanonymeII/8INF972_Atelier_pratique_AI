@@ -11,58 +11,116 @@
   
   <!-- Menu bar -->
   <div>
-    <div class="menuBar">
-      <div id="loginButton" class="menuLogin">LOGIN</div>
-      <div style="padding:5%;"><img class="menuLogo" src="pictures/logo_Odysseylogo.png" /></div>
-    </div>
-    
-    <!-- Homepage content -->
-    <div>
-      <img src="/pictures/odysseyHome.gif" alt="Odyssey Home GIF" style="width: 100%; height: 100%; object-fit: cover;">
-    </div>
-    <!-- Presentation -->
-    <div class="presentationDiv">
-      
-      <!-- Product -->
-      <div style="width: 65%;">
-        <div class="baniereTitre">PRODUIT</div>
-        <img src="pictures/entreeSortiesPicture.png"/>
+    <div class="container section" id="section1">
+      <div class="menuBar">
+        <img class="menuLogo" src="pictures/logo_Odysseylogo.png" />
+        <div id="loginButton" class="menuLogin">Login</div>
       </div>
       
-      <!-- Tarifs -->
-      <div class="tarifPanel">
-        <div class="baniereTitre">TARIFS</div>
-        <!-- Tarifs Section -->
-        <div style="display: flex; flex-direction: column; height: 100vh;justify-content: space-around; width:70%">
-          <!-- Free -->
-          <div class="tarif_section">
-            <div class="titre_tarif">Essai : FREE</div>
-            <div class="content_tarif">Titre & Script</div>
-          </div>
-          <!-- Casual -->
-          <div class="tarif_section">
-            <div class="titre_tarif">Casual : 10k$/mois</div>
-            <div class="content_tarif">2 jetons / mois</div>
-          </div>
-          <!-- Pro -->
-          <div class="tarif_section">
-            <div class="titre_tarif">Pro : 400k$/mois</div>
-            <div class="content_tarif">10 jetons / mois</div>
-          </div>
+      <!-- Homepage content -->
+      <div>
+        <img src="/pictures/odysseyHome.gif" alt="Odyssey Home GIF" class="logoMainImage">
+      </div>
+    </div>
+    <!-- Presentation -->
+    <div class="section" id="section2">
+      <div class="m-auto dark_description_bg">
+        <p class="tagline">In lack of inspiration ?</p>
+        <div class="mt-2">
+          <h1 class="main-title unlimited-main-title">Unlimited ideas</h1>
+          <p class="text-content unlimited-content mb-4 pb-3 mt-4">
+            Simply choose the genre, public and budget and we'll get you started with a title and a scenario matching your requests.
+          </p>
+          <button class="primary-btn unlimited-button">
+            Start now !
+          </button>
+        </div>
+      </div>
+      <div class="img-container">
+        <img src="pictures/thinking.png" class="img-border" sizes="(min-width: 1620px) 710px, (min-width: 1000px) 43.5vw, (min-width: 460px) calc(100vw - 72px), calc(100vw - 32px)" loading="lazy">
+      </div>
+    </div>
+    <div class="section" id="section3">
+      <div class="img-container">
+        <img src="pictures/deficit.png" class="img-border" sizes="(min-width: 1620px) 710px, (min-width: 1000px) 43.5vw, (min-width: 460px) calc(100vw - 72px), calc(100vw - 32px)" loading="lazy">
+      </div>
+      <div class="m-auto dark_description_bg">
+        <p class="tagline">Experiencing financial difficulties?</p>
+        <div class="mt-2">
+          <h1 class="main-title unlimited-main-title">User friendly money-making AI</h1>
+          <p class="text-content unlimited-content mb-4 pb-3 mt-4">
+            Our AI gives you actors fitting your budget and a release dates that will make your investement worth it.
+          </p>
+          <button class="primary-btn unlimited-button">
+            Try our FREE trial!
+          </button>
         </div>
       </div>
     </div>
-    
-    <!-- Presentation equipe -->
-    <div>
-      <!-- Title equipe -->
-      <div class="baniereTitre">NOTRE EQUIPE</div>
-      <img style="width: 100%; height: auto; object-fit: cover;" src="pictures/equipe.png" />
+    <div class="section" id="section4">
+      <div class="m-auto dark_description_bg">
+        <p class="tagline">Looking for a golden statue ?</p>
+        <div class="mt-2">
+          <h1 class="main-title unlimited-main-title">Getting oscars has never been so easy</h1>
+          <p class="text-content unlimited-content mb-4 pb-3 mt-4">
+            We tell you the chances your movie has at getting oscars noms.
+          </p>
+          <button class="primary-btn unlimited-button">
+            Go for gold!
+          </button>
+        </div>
+      </div>
+      <div class="img-container">
+        <img src="pictures/oscar.png" class="img-border" sizes="(min-width: 1620px) 710px, (min-width: 1000px) 43.5vw, (min-width: 460px) calc(100vw - 72px), calc(100vw - 32px)" loading="lazy">
+      </div>
     </div>
-    
-    <!-- Copyright -->
-    <div class="copyright_ext">
-      <div class="copyright_int">© 2023 Odyssey. All rights reserved. The content and materials on this website, including text, images, graphics, and other intellectual property, are protected by copyright and other intellectual property laws. These materials may not be reproduced, distributed, modified, or publicly displayed without the prior written permission of Odyssey. For inquiries regarding the use or licensing of our copyrighted materials, please contact us. Unauthorized use of any materials on this website may violate copyright, trademark, and other laws. Odyssey reserves the right to take legal action to protect its intellectual property.</div>
+    <div class="section" id="section5">
+      <div class="offers-title">
+        <h1>Our offers</h1>
+      </div>
+      <div class="offers-content">
+        <div class="offers-box">
+          <div class="offer-title">
+            Free
+            <div class="offer-price">0$/month</div>
+          </div>
+          
+          <div class="offer-description">Perfect for students or just to try the app. <br> 
+            Gives you access to title and scenario generation.</div>
+          </div>
+          <div class="offers-box">
+            <div class="offer-title">
+              Casual
+              <div class="offer-price">10k$/month</div>
+            </div>
+            
+            <div class="offer-description">
+              If you're a little studio, it's the perfect option for you!<br>
+              Gives access to 2 token per month.
+            </div>
+          </div>
+          <div class="offers-box">
+            <div class="offer-title">
+              Pro
+              <div class="offer-price">400k$/month</div>
+            </div>
+            
+            <div class="offer-description">
+              
+              Our best option! With it you'll have 10 tokens per month.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section" id="section6">
+        <div class="offers-title">
+          <h1>Our team</h1>
+        </div>
+        <div class="team-container">
+          <img src="pictures/equipe.png" />
+        </div>
+        
+      </div>
     </div>
   </div>
   
