@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Odyssey</title>
+    <link rel="icon" href="/pictures/logo_Odysseylogo.png" type="image/png">
+</head>
+<body>
+    <div style="display: flex; justify-content: center; flex-direction: column;">
+        <!--deconnection bar-->
+        <div class="menuBar">
+            <div id="unlogButton" class="menuLogin">SE DECONNECTER</div>
+            <div style="padding:5%;"><img class="menuLogo" src="/pictures/logo_Odysseylogo.png" /></div>
+        </div>
+        <div style="display:flex; flex-direction: column;">
+            <!--budget & genre-->
+            <div style="display : flex; flex-direction: row;" >
+                <!--selection du budget du film-->
+                <div style="display : flex; padding:1%; background: #F88F52; flex-direction: column; justify-content: flex-start; align-items: center; gap: 90px; display: inline-flex;">
+                    <div class="titreFiltreSearch">BUDGET DU FILM</div>
+                    <div class="sliderContainer">
+                        <div id="slider"></div>
+                        <div id="slider-values">
+                            <span id="value1"></span> - <span id="value2"></span>
+                        </div>
+                    </div>
+                </div>
+                <!--selection genre du film-->
+                <div style="padding:1%; background: #F193B2; justify-content: flex-start; align-items: flex-start; gap: 10px; display: flex;">
+                    <div class="titreFiltreSearch">GENRE DU FILM</div>
+                    <div style="display:flex; flex-direction: row">
+                        <div>
+                            <form>
+                                <div class="option">
+                                    <input type="checkbox" id="genre1" name="group2" unchecked>
+                                    <label for="genre1" class="labelOption">Action</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre2" name="group2" unchecked>
+                                    <label for="genre2" class="labelOption">Adventure</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre3" name="group2" unchecked>
+                                    <label for="genre3" class="labelOption">Comedy</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre4" name="group2" unchecked>
+                                    <label for="genre4" class="labelOption">Romance</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre5" name="group2" unchecked>
+                                    <label for="genre6" class="labelOption">Drama</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre6" name="group2" unchecked>
+                                    <label for="genre6" class="labelOption">Horror</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre7" name="group2" unchecked>
+                                    <label for="genre7" class="labelOption">Science Fiction</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre8" name="group2" unchecked>
+                                    <label for="genre8" class="labelOption">Fantasy</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre9" name="group2" unchecked>
+                                    <label for="genre9" class="labelOption">Thriller</label>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div>
+                            <form>
+                                <div class="option">
+                                    <input type="checkbox" id="genre10" name="group2" unchecked>
+                                    <label for="genre10" class="labelOption">Crime</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre11" name="group2" unchecked>
+                                    <label for="genre11" class="labelOption">War</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre12" name="group2" unchecked>
+                                    <label for="genre12" class="labelOption">Western</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre13" name="group2" unchecked>
+                                    <label for="genre13" class="labelOption">History</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre14" name="group2" unchecked>
+                                    <label for="genre14" class="labelOption">Biographique</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre15" name="group2" unchecked>
+                                    <label for="genre15" class="labelOption">Music</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre16" name="group2" unchecked>
+                                    <label for="genre16" class="labelOption">Animation</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre17" name="group2" unchecked>
+                                    <label for="genre17" class="labelOption">Documentary</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="genre18" name="group2" unchecked>
+                                    <label for="genre18" class="labelOption">Mystery</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!--public & objectif-->
+            <div style="display:flex; flex-direction: row;">
+                <!--selection type de public du film-->
+                <div style="width: 60%; padding: 1%; background: #7ACFB0; display: flex; flex-direction: row;">
+                    <div class="titreFiltreSearch">PUBLIC DU FILM</div>
+                    <div style="display:flex;flex-direction: column;">
+                        <form>
+                            <div class="option">
+                                <input type="radio" id="public1" name="group1" checked>
+                                <label for="public1" class="labelOption">Tout public</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="public2" name="group1">
+                                <label for="public2" class="labelOption">Family</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="public3" name="group1">
+                                <label for="public3" class="labelOption">Enfants</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="public4" name="group1">
+                                <label for="public4" class="labelOption">Adolescents</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="public5" name="group1">
+                                <label for="public5" class="labelOption">Adultes</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="public6" name="group1">
+                                <label for="public6" class="labelOption">Senior</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="public7" name="group1">
+                                <label for="public7" class="labelOption">Fan de genre</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!--objectif du film-->
+                <div style="width:40%; padding:1%; background: #00BDC8; flex-direction: column; justify-content: space-around; align-items: flex-start; display: inline-flex">
+                    <div class="titreFiltreSearch">OBJECTIF DU FILM</div>
+                    <div style="display:flex;flex-direction: column;">
+                        <form>
+                            <div class="option">
+                                <input type="radio" id="objectif1" name="group3" checked>
+                                <label for="objectif1" class="labelOption">Oscar</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="objectif2" name="group3">
+                                <label for="objectif2" class="labelOption">Box Office</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--boutton lancer une simulation-->
+        <div style="width: 100%; flex-direction: column; justify-content: center; align-items: center; display: flex; padding:1%;">
+            <div id="launchSimulation" style="width: 80%; height: 80%; background: #FBCE9E; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset; border-radius: 36px; flex-direction: column; justify-content: center; align-content : center; display: flex; text-align: center; margin:1%">
+                <span style="color: #1C5588; font-size: 80px; font-family: Lato; font-weight: 400; line-height: 93.20px; word-wrap: break-word">
+                    LANCER UNE SIMULATION
+                </span>
+                <span style="color: #F88F52; font-size: 35px; font-family: Lato; font-weight: 400; line-height: 40.77px; word-wrap: break-word">
+                    1 jeton
+                </span>
+            </div>
+
+            <div id="loadingAnimation">
+                <!-- Your loading animation here -->
+                Loading...
+              </div>
+            
+            <!--resultats simulation-->
+            <div id="simulationResult">
+                <div class="sectionSimulation">
+                    <div class="titreSectionSimulation">Titre généré du film à remplacer</div>
+                    <!-- image avec titre du film intégré à remplacer-->
+                    <img style="width: 90%; height: 90%;" src="/pictures/defaultfilm.png" />
+                </div>
+                <!--synopsis-->
+                <div class="sectionSimulation">
+                    <div class="titreSectionSimulation">SYNOPSIS</div>
+                    <div id="textSynopsis">
+                        Ce texte est un exemple graphique destiné à illustrer l'espace occupé sur la page web de la start-up Odyssey par le synopsys généré par l'intelligence artificielle en rapport avec les choix budgétaires, de genre, de public ciblé et des objectifs que l'utilisateur veut atteindre avec son film.
+                    </div>
+                </div>
+                <!--distribution-->
+                <div class="sectionSimulation">
+                    <div class="titreSectionSimulation">DISTRIBUTION</div>
+                    <div>
+                        <ul id="listeDistribution">
+                            <!--acteur 1-->
+                            <li id="elementActor">
+                                <div class="actorImage">
+                                    <img src="/pictures/Acteur1.png" />
+                                    <div class="actorName">Prénom NOM</div>
+                                </div>
+                            </li>
+                            <li id="elementActor">
+                                <div class="actorImage">
+                                    <img src="/pictures/Acteur1.png" />
+                                    <div class="actorName">Prénom NOM</div>
+                                </div>
+                            </li>
+                            <li id="elementActor">
+                                <div class="actorImage">
+                                    <img src="/pictures/Acteur1.png" />
+                                    <div class="actorName">Prénom NOM</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--graphique date de sortie/revenu estimé-->
+                <div class="sectionSimulation">
+                    <div class="titreSectionSimulation">DATE DE SORTIE & REVENU ESTIME</div>
+                    <img src="/pictures/graphExemple.png" /> 
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="copyright_ext">
+                <div class="copyright_int">© 2023 Odyssey. All rights reserved. The content and materials on this website, including text, images, graphics, and other intellectual property, are protected by copyright and other intellectual property laws. These materials may not be reproduced, distributed, modified, or publicly displayed without the prior written permission of Odyssey. For inquiries regarding the use or licensing of our copyrighted materials, please contact us. Unauthorized use of any materials on this website may violate copyright, trademark, and other laws. Odyssey reserves the right to take legal action to protect its intellectual property.</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="scriptSearch.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
+</body>
+</html>
