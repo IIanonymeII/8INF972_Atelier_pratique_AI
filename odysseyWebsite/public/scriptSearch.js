@@ -195,8 +195,8 @@ window.addEventListener('wheel', (event) => {
 
     if (currentSection < 1) {
         currentSection = 1;
-    } else if (currentSection > 6) {
-        currentSection = 6;
+    } else if (currentSection > 4) {
+        currentSection = 4;
     }
 
     scrollToSection(currentSection);
@@ -208,8 +208,8 @@ document.addEventListener('keydown', function(event) {
     currentSection++;
     if (currentSection < 1) {
       currentSection = 1;
-    } else if (currentSection > 6) {
-        currentSection = 6;
+    } else if (currentSection > 4) {
+        currentSection = 4;
     }
     scrollToSection(currentSection);
   }
@@ -217,8 +217,8 @@ document.addEventListener('keydown', function(event) {
     currentSection--;
     if (currentSection < 1) {
       currentSection = 1;
-    } else if (currentSection > 6) {
-        currentSection = 6;
+    } else if (currentSection > 4) {
+        currentSection = 4;
     }
     scrollToSection(currentSection);
   }
@@ -294,3 +294,8 @@ function displayActors(actors,img_actor) {
       container.appendChild(current);
   });
 }
+
+document.getElementById("close-button").addEventListener('click', function() {
+  // Navigate to the search.html page
+  window.location.href = 'home.html';
+});

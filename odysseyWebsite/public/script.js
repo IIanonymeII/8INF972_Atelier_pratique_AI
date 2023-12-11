@@ -2,12 +2,18 @@
 const loginButton = document.getElementById('loginButton');
 
 // Add a click event listener to the LOGIN div
-loginButton.addEventListener('click', function() {
-  // Navigate to the search.html page
-  window.location.href = 'search.html';
-});
+loginButton.addEventListener('click', goToSearchPage);
+
+function goToSearchPage() {
+    window.location.href = 'search.html';
+}
 
 let currentSection = 1;
+buttons = document.getElementsByClassName("redirect-button")
+for (var i = 0; i < buttons.length; i++) {
+    var button = buttons[i];
+    button.addEventListener("click", goToSearchPage)
+}
 
 window.addEventListener('wheel', (event) => {
     if (event.deltaY > 0) {

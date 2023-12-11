@@ -692,6 +692,7 @@ span.choose {
 		0 10px 20px 20px #ffffff40;
 	filter: blur(3px);
 	animation: 2s rotate linear infinite;
+    left: 0;
 }
 
 @keyframes rotate {
@@ -892,5 +893,75 @@ body {
 }
 
 #money-bag, #oscar-img {
+    cursor: pointer;
+}
+
+/*close button*/
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+.close-button {
+  background: none;
+  border: 0;
+  box-sizing: border-box;
+  color: transparent;
+  cursor: pointer;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  left: 50%;
+  letter-spacing: 1.5px;
+  line-height: 50px;
+  outline: none;
+  overflow: hidden;
+  position: absolute;
+  text-transform: uppercase;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s ease-in;
+  width: 50px;
+  position: fixed;
+  top: 0;
+  margin-top: 60px;
+  left: 95vw;
+  margin-right: 60px;
+  z-index: 2;
+
+}
+
+.close-button::before,
+.close-button::after {
+  background-color: white;
+  content: '';
+  display: block;
+  height: 3px;
+  left: 0;
+  position: absolute;
+  transform-origin: center left;
+  transition: all 0.2s ease-in;
+  width: 141.4214px;
+  z-index: -1;
+}
+
+.close-button::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.close-button::after {
+  bottom: 0;
+  transform: rotate(-45deg);
+}
+
+.close-button:hover {
+  color: #8A2387;
+}
+
+.close-button:hover::before,
+.close-button:hover::after {
+  height: 60px;
+  transform: rotate(0deg);
+}
+
+.redirect-button {
     cursor: pointer;
 }
