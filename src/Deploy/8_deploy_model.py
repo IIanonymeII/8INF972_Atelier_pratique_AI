@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
+import mplcyberpunk
 
 # Set the LOKY_MAX_CPU_COUNT environment variable to the number of cores you want to use
 os.environ['LOKY_MAX_CPU_COUNT'] = '4'  # Replace '4' with the desired number of cores
@@ -60,10 +61,30 @@ def plot_box_office_returns(box_office_values):
 
     # Plotting
     plt.figure(figsize=(10, 6))
-    plt.plot(months, box_office_values, marker='o', linestyle='-')
-    plt.title("Box Office Returns Over the Year")
+    plt.style.use('cyberpunk')
+    box_office_values = np.array(box_office_values) / 1e6
+    sorted_indices = np.argsort(box_office_values)
+
+    # Initialize an array of default colors
+    colors = [None] * box_office_values.shape[0]
+
+    for i in sorted_indices[:4]:
+        colors[i] = 'red'
+    for i in sorted_indices[4:8]:
+        colors[i] = 'orange'
+    for i in sorted_indices[8:10]:
+        colors[i] = 'yellow'
+    for i in sorted_indices[10:]:
+        colors[i] = 'green'
+
+    plt.plot(months, box_office_values, linestyle='-', zorder = 2)
+    plt.scatter(months, box_office_values, c = colors, zorder = 3)
+    mplcyberpunk.make_scatter_glow()
+    mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.5, gradient_start='zero')
+    plt.title("Box office returns previsions", fontsize=16)
+    plt.xticks(rotation=45, ha='right')
     plt.xlabel("Month")
-    plt.ylabel("Total Box Office Return ($)")
+    plt.ylabel("Total Box Office Return (M$)")
     plt.grid(True)
     plt.show()
 
