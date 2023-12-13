@@ -12,6 +12,22 @@ import mplcyberpunk
 # Set the LOKY_MAX_CPU_COUNT environment variable to the number of cores you want to use
 os.environ['LOKY_MAX_CPU_COUNT'] = '4'  # Replace '4' with the desired number of cores
 
+def get_feature_names_from_json(json_file_path):
+    # Load the JSON file
+    with open(json_file_path, 'r') as file:
+        data = json.load(file)
+
+    # Extract feature names into a list
+    feature_names = data
+
+    # Add additional names: 'year', 'budget', 'duration'
+    additional_names = ['month','year', 'budget', 'duration']
+    
+    # Concatenate the lists
+    feature_names = np.concatenate([additional_names, feature_names])
+
+    return feature_names.tolist()  # Convert back to a regular Python list
+
 def load_model_from_joblib(file_path):
     try:
         model = joblib.load(file_path)
@@ -87,6 +103,9 @@ def plot_box_office_returns(box_office_values):
     plt.ylabel("Total Box Office Return (M$)")
     plt.grid(True)
     plt.show()
+    
+    #plt.savefig('src/Deploy/plot.png', bbox_inches='tight')  # Save the plot as an image
+
 
 def predict(year: int, budget: int, duration: int, Genres: [], MPAA_rating: [], Keywords: [], Source: [], Production_Method: [], Creative_type: [], Countries: []):
     
@@ -121,7 +140,7 @@ def predict(year: int, budget: int, duration: int, Genres: [], MPAA_rating: [], 
 
         #Input Vector
         input_vector = np.concatenate((month_vector, scaled_numerical, encoded_categorical), axis=1)
-        print(f"Input vector shape {input_vector.shape}")
+        #print(f"Input vector shape {input_vector.shape}")
 
         #Applying PCA
         pca = joblib.load('src/Deploy/pca_model.joblib')
