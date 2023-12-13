@@ -174,20 +174,4 @@ def get_box_office_min_max(year: int, budget_min: int, budget_max: int, duration
 
     return file_path
 
-# Example usage:
-year = 2023
-budget_max = 100000000  # Replace with your actual budget value
-budget_min = 150000000  # Replace with your actual budget value
-
-duration = 120  # Replace with your actual duration value
-Genres = ['Action', 'Adventure']
-MPAA_rating = ['PG-13']
-Keywords = ['superhero', 'villain']
-Source = ['Original screenplay']
-Production_Method = ['Live action']
-Creative_type = ['Super Hero']
-Countries = ['United States']
-
-file_path = get_box_office_min_max(year, budget_min, budget_max, duration, Genres, 
-                                            MPAA_rating, Keywords, Source, Production_Method, Creative_type, Countries)
 
