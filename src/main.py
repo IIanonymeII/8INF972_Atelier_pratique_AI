@@ -27,7 +27,7 @@ async def receive_data():
     selected_goal = data['selectedGoal']
     budget_min = max(budget_min,1)
     encoded_image = None
-    oscarResult = None
+    oscarResult = 1
     if selected_goal == "Oscars":
         list_actor = cast.findActorsOSCAR(5, selected_genres, budget_min, budget_max)
         oscarResult = predict(selected_genres, [])
