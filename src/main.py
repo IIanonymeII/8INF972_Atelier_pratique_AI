@@ -28,7 +28,7 @@ async def receive_data():
     budget_min = max(budget_min,1)
     encoded_image = None
     oscarResult = None
-    if selected_goal == "Oscar":
+    if selected_goal == "Oscars":
         list_actor = cast.findActorsOSCAR(5, selected_genres, budget_min, budget_max)
         oscarResult = predict(selected_genres, [])
     else :
@@ -40,6 +40,7 @@ async def receive_data():
         #image_name = "src/graphs/plot.png"
         with open(image_name, 'rb') as image_file:
             encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
+        os.remove(image_name)
     list_actor_img = fetch_actor_images(list_actor)
 
     word = await hazard_word() 
@@ -50,8 +51,9 @@ async def receive_data():
               "titre": title,
               "description":description,
               "image_bo": encoded_image,
-              "oscar_result": oscarResult}
-    os.remove(image_name)
+              "oscar_result": int(oscarResult)}
+    
+    print(result)
 
     # Return the result as JSON
     return jsonify(result)

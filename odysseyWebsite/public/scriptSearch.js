@@ -317,5 +317,10 @@ function displayBO(image) {
 }
 
 function displayOscar(result) {
-  document.getElementById('result-oscars').innerHTML = result
+  if (result == 1) {
+    content = "Your movie has high chances of being nominated for an oscar."
+  } else {
+    content = "Your movie has low chances of being nominated for an oscar."
+  }
+  document.getElementById('result-oscars').innerHTML = content
 }
