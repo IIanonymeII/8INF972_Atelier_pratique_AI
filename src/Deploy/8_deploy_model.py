@@ -1,8 +1,10 @@
 import os
 import json 
 import joblib
+import hashlib
 import numpy as np
 import mplcyberpunk
+from datetime import datetime
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
@@ -33,7 +35,7 @@ def load_model_from_joblib(file_path):
         print(f"Error loading the model from {file_path}: {e}")
         return None
 
-def encode_categorical_features(true_features, json_filename='src/Deploy/column_names.json'):
+def encode_categorical_features(true_features, json_filename='/workspaces/8INF972_Atelier_pratique_AI/src/Deploy/column_names.json'):
     # Load all_features from the JSON file
     with open(json_filename, 'r') as json_file:
         all_features = json.load(json_file)
@@ -64,45 +66,49 @@ def scale_numerical_inputs(numerical_inputs):
 
     return scaled_array
 
-def plot_box_office_returns(box_office_values):
+def plot_budget_returns(budget_min, budget_max):
     # Assuming you have 12 months in a year
     months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-    # Check if the length of the input list matches the number of months
-    if len(box_office_values) != len(months):
+    # Check if the length of the input lists matches the number of months
+    if len(budget_min) != len(months) or len(budget_max) != len(months):
         raise ValueError("Number of values should match the number of months (12).")
 
     # Plotting
     plt.figure(figsize=(10, 6))
     plt.style.use('cyberpunk')
-    box_office_values = np.array(box_office_values) / 1e6
-    sorted_indices = np.argsort(box_office_values)
 
-    # Initialize an array of default colors
-    colors = [None] * box_office_values.shape[0]
+    # Convert values to millions for better readability
+    budget_min = np.array(budget_min) / 1e6
+    budget_max = np.array(budget_max) / 1e6
 
-    for i in sorted_indices[:4]:
-        colors[i] = 'red'
-    for i in sorted_indices[4:8]:
-        colors[i] = 'orange'
-    for i in sorted_indices[8:10]:
-        colors[i] = 'yellow'
-    for i in sorted_indices[10:]:
-        colors[i] = 'green'
+    # Plot the minimum values
+    plt.plot(months, budget_min, linestyle='-', label='Box Office with Minimum Budget', zorder=2)
+    plt.scatter(months, budget_min, c='blue', zorder=3)
 
-    plt.plot(months, box_office_values, linestyle='-', zorder = 2)
-    plt.scatter(months, box_office_values, c = colors, zorder = 3)
+    # Plot the maximum values
+    plt.plot(months, budget_max, linestyle='-', label='Box Office with Maximum Budget', zorder=2)
+    plt.scatter(months, budget_max, c='orange', zorder=3)
+
     mplcyberpunk.make_scatter_glow()
     mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.5, gradient_start='zero')
-    plt.title("Box office returns previsions", fontsize=16)
+    
+    # Generate a unique title using hash function and current time
+    random_input = np.random.random()
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    unique_title = hashlib.sha256(f"{random_input}{current_time}".encode()).hexdigest()[:8]
+    
     plt.xticks(rotation=45, ha='right')
     plt.xlabel("Month")
-    plt.ylabel("Total Box Office Return (M$)")
+    plt.ylabel("Total Budget Return (M$)")
+    plt.legend()  # Add legend to distinguish between the two sets
     plt.grid(True)
-    plt.show()
     
-    plt.savefig('src/Deploy/plot.png', bbox_inches='tight')  # Save the plot as an image
+    # Save the plot with the unique title
+    plot_filename = f'/workspaces/8INF972_Atelier_pratique_AI/src/graphs/plot_{unique_title}.png'
+    plt.savefig(plot_filename, bbox_inches='tight')
 
+    return plot_filename
 
 def predict(year: int, budget: int, duration: int, Genres: [], MPAA_rating: [], Keywords: [], Source: [], Production_Method: [], Creative_type: [], Countries: []):
     
@@ -140,11 +146,11 @@ def predict(year: int, budget: int, duration: int, Genres: [], MPAA_rating: [], 
         #print(f"Input vector shape {input_vector.shape}")
 
         #Applying PCA
-        pca = joblib.load('src/Deploy/pca_model.joblib')
+        pca = joblib.load('/workspaces/8INF972_Atelier_pratique_AI/src/Deploy/pca_model.joblib')
         input_vector_PCA = pca.transform(input_vector)
 
         #Using model
-        model_path = 'src/Deploy/KNN_best_model.pkl'
+        model_path = '/workspaces/8INF972_Atelier_pratique_AI/src/Deploy/KNN_best_model.pkl'
         loaded_model = load_model_from_joblib(model_path)
 
         # Now you can use the loaded_model for predictions on the input_vector
@@ -157,6 +163,31 @@ def predict(year: int, budget: int, duration: int, Genres: [], MPAA_rating: [], 
     return box_office_list
 
 
+def get_box_office_min_max(year: int, budget_min: int, budget_max: int, duration: int, Genres: [], MPAA_rating: [], Keywords: [], Source: [], Production_Method: [], Creative_type: [], Countries: []):
+    # Call predict method for budget_min
+    budget_min_values = predict(year, budget_min, duration, Genres, MPAA_rating, Keywords, Source, Production_Method, Creative_type, Countries)
 
+    # Call predict method for budget_max
+    budget_max_values = predict(year, budget_max, duration, Genres, MPAA_rating, Keywords, Source, Production_Method, Creative_type, Countries)
 
+    file_path = plot_budget_returns(budget_min_values, budget_max_values)
+
+    return file_path
+
+# Example usage:
+year = 2023
+budget_max = 100000000  # Replace with your actual budget value
+budget_min = 150000000  # Replace with your actual budget value
+
+duration = 120  # Replace with your actual duration value
+Genres = ['Action', 'Adventure']
+MPAA_rating = ['PG-13']
+Keywords = ['superhero', 'villain']
+Source = ['Original screenplay']
+Production_Method = ['Live action']
+Creative_type = ['Super Hero']
+Countries = ['United States']
+
+file_path = get_box_office_min_max(year, budget_min, budget_max, duration, Genres, 
+                                            MPAA_rating, Keywords, Source, Production_Method, Creative_type, Countries)
 
