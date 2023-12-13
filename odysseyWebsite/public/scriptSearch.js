@@ -2,7 +2,7 @@ const loadingAnimation = document.getElementById('pre-loader');
 const simulationPanel = document.getElementById('simulationResult');
 var minBudgetVal;
 var maxBudgetVal;
-
+var selectedGoal;
 document.addEventListener('DOMContentLoaded', function () {
   var slider = document.getElementById('slider');
   var values = [0, 1000000000]; // Initial values for the handles
@@ -47,6 +47,13 @@ function formatNumber(number) {
 }
 
 let currentSlide = 1;
+dictRatings = {
+  "General audiences (G)": "MPAA Rating_G",
+  "Parental Guidance Cautioned (PG)": "MPAA Rating_PG",
+  "Parental Guidance Cautioned (PG-13)": "MPAA Rating_PG-13",
+  "Restricted (R)": "MPAA Rating_R",
+  "No one under 17 (NC-17)": "MPAA Rating_NC-17"
+}
 
 function nextSlide(i) {
   if (i == 2) {
@@ -148,7 +155,7 @@ function sendData() {
     budgetMin: budgetMin,
     budgetMax: budgetMax,
     selectedGenres: selectedGenres,
-    selectedPublic: selectedPublic,
+    selectedPublic: dictRatings[selectedPublic],
     selectedGoal: selectedGoal
   };
   startLoading();
@@ -169,8 +176,12 @@ function sendData() {
       displayFilm(result.titre);
       displayDescription(result.description);
       displayActors(result.actors,result.img_actors);
-      stopLoading();
-                
+      if (selectedGoal == "Box office") {
+        displayBO(result.image_bo)
+      } else {
+        displayOscar(result.oscar_result)
+      }
+      stopLoading();         
     }, 2000); // How long you want the delay to be, measured in milliseconds.
     
     
@@ -299,3 +310,12 @@ document.getElementById("close-button").addEventListener('click', function() {
   // Navigate to the search.html page
   window.location.href = 'home.html';
 });
+
+function displayBO(image) {
+  var pictureElement = document.getElementById('image-BO');
+  pictureElement.src = 'data:image/jpeg;base64,' + image;
+}
+
+function displayOscar(result) {
+  document.getElementById('result-oscars').innerHTML = result
+}
