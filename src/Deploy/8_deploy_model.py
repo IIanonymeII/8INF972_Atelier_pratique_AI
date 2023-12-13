@@ -101,7 +101,7 @@ def plot_box_office_returns(box_office_values):
     plt.grid(True)
     plt.show()
     
-    #plt.savefig('src/Deploy/plot.png', bbox_inches='tight')  # Save the plot as an image
+    plt.savefig('src/Deploy/plot.png', bbox_inches='tight')  # Save the plot as an image
 
 
 def predict(year: int, budget: int, duration: int, Genres: [], MPAA_rating: [], Keywords: [], Source: [], Production_Method: [], Creative_type: [], Countries: []):
@@ -155,25 +155,6 @@ def predict(year: int, budget: int, duration: int, Genres: [], MPAA_rating: [], 
             #print(predictions)
     
     return box_office_list
-
-#Numerical featuers
-year = 2020
-budget = 14000000
-duration = 120
-
-#Categorical features
-MPAA_rating = ['MPAA Rating_PG-13']
-Keywords = ['Keywords_War','Keywords_War Drama'] #Multiple
-Source = ['Source_Based on Real Life Events']
-Production_method = ['Production method_Live Action']
-Creative_type = ['Creative type_Contemporary Fiction']
-Countries = ['Countries_United States'] #Multiple
-Genres = ['Drama','Thriller']
-
-box_office_list = predict(year=year, budget=budget, duration=duration, Genres=Genres, MPAA_rating=MPAA_rating, Keywords=Keywords, Source=Source,
-        Production_Method=Production_method, Creative_type=Creative_type, Countries=Countries)
-
-plot_box_office_returns(box_office_list)
 
 
 
