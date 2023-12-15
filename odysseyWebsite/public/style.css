@@ -968,11 +968,11 @@ body {
 }
 
 #image-BO {
-    max-width: 400px;
+    max-width: 600px;
     height: auto;
 }
 
 #result-BO {
-    padding-top:100px;
+    padding-top:150px;
     text-align: center;
 }
