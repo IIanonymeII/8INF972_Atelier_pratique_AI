@@ -110,7 +110,11 @@ def plot_budget_returns(budget_min, budget_max):
 
     return plot_filename
 
-def predict(year: int, budget: int, duration: int, Genres: [], MPAA_rating: [], Keywords: [], Source: [], Production_Method: [], Creative_type: [], Countries: []):
+def predict(year: int = 2023, budget: int = 30000000, duration: int = 120, Genres: [] = ['Action','Adventure'], MPAA_rating: [] = ['MPAA Rating_PG']
+            , Keywords: [] = ['Keywords_Action Adventure'], Source: [] = ['Source_Original Screenplay'], 
+            Production_Method: [] = ['Production method_Live Action'], 
+            Creative_type: [] = ['Creative type_Contemporary Fiction'], 
+            Countries: [] = ['Countries_United States']):
     
     #Numerical features
     numerical_features = {
@@ -173,5 +177,4 @@ def get_box_office_min_max(year: int, budget_min: int, budget_max: int, duration
     file_path = plot_budget_returns(budget_min_values, budget_max_values)
 
     return file_path
-
 

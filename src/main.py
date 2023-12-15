@@ -33,7 +33,7 @@ async def receive_data():
         oscarResult = predict(selected_genres, [])
     else :
         list_actor = cast.findActorsBOXOFFICE(5, selected_genres, budget_min, budget_max)
-        year = datetime.now().year
+        year = 2021
         year = int(year)
         duration = random.randint(90, 150)
         image_name = BOmodel.get_box_office_min_max(year, budget_min, budget_max, duration, selected_genres, [selected_public], [], [], [], [], ["Countries_United States"])
